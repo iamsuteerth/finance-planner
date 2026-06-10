@@ -20,20 +20,22 @@ export function buildCashflowEvents(
       (expense) =>
         expense.month === month
     )
-    .map((expense) => ({
-      id: expense.id,
+    .forEach((expense) => {
+      events.push({
+        id: expense.id,
 
-      month,
+        month,
 
-      type:
-        "ONE_OFF_EXPENSE",
+        type:
+          "ONE_OFF_EXPENSE",
 
-      amount:
-        expense.amount,
+        amount:
+          expense.amount,
 
-      description:
-        expense.label,
-    }));
+        description:
+          expense.label,
+      });
+    });
   config.bonusIncome
     .filter(
       (bonus) =>

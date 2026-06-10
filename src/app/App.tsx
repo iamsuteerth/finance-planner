@@ -10,6 +10,9 @@ import NetWorthChart
 import ForecastTable
   from "../components/forecast/ForecastTable";
 
+import EventTimeline
+  from "../components/timeline/EventTimeline";
+
 export default function App() {
   return (
     <PlannerShell>
@@ -18,6 +21,8 @@ export default function App() {
       <NetWorthChart />
 
       <ForecastTable />
+
+      <EventTimeline />
     </PlannerShell>
   );
 }
