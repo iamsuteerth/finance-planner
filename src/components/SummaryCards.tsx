@@ -1,94 +1,168 @@
 import {
   Card,
   Grid,
-  Stack,
+  Group,
   Text,
+  ThemeIcon,
   Title,
 } from "@mantine/core";
+
+import {
+  IconCoins,
+  IconWallet,
+  IconChartLine,
+  IconBuildingBank,
+} from "@tabler/icons-react";
 
 import {
   useSimulation,
 } from "../hooks/useSimulation";
 
+import {
+  usePlannerStore,
+} from "../store/plannerStore";
+
+import type {
+  ReactNode,
+} from "react";
+
+function MetricCard({
+  title,
+  value,
+  icon,
+}: {
+  title: string;
+  value: string;
+  icon: ReactNode;
+}) {
+  return (
+    <Card
+      radius="xl"
+      withBorder
+      p="lg"
+    >
+      <Group
+        justify="space-between"
+        mb="md"
+      >
+        <Text
+          size="sm"
+          c="dimmed"
+        >
+          {title}
+        </Text>
+
+        <ThemeIcon
+          radius="xl"
+          variant="light"
+        >
+          {icon}
+        </ThemeIcon>
+      </Group>
+
+      <Title order={3}>
+        {value}
+      </Title>
+    </Card>
+  );
+}
+
 export default function SummaryCards() {
   const result =
     useSimulation();
 
-  const cards = [
-    {
-      label:
-        "Final Net Worth",
+  const config =
+    usePlannerStore(
+      (state) =>
+        state.config
+    );
 
-      value:
-        result.summary
-          .finalNetWorth,
-    },
-
-    {
-      label:
-        "Final Cash",
-
-      value:
-        result.summary
-          .finalBalance,
-    },
-
-    {
-      label:
-        "Lowest Balance",
-
-      value:
-        result.summary
-          .lowestBalance,
-    },
-  ];
+  const finalRow =
+    result.rows[
+      result.rows.length - 1
+    ];
 
   return (
     <Grid>
-      {cards.map(
-        (card) => (
-          <Grid.Col
-            key={
-              card.label
-            }
-            span={{
-              base: 12,
-              md: 4,
-            }}
-          >
-            <Card
-              radius="xl"
-              shadow="xs"
-              withBorder
-              p="lg"
-            >
-              <Stack
-                gap={6}
-              >
-                <Text
-                  size="xs"
-                  tt="uppercase"
-                  fw={700}
-                  c="dimmed"
-                >
-                  {
-                    card.label
-                  }
-                </Text>
+      <Grid.Col
+        span={{
+          base: 12,
+          md: 3,
+        }}
+      >
+        <MetricCard
+          title="Net Worth"
+          value={`₹${Math.round(
+            finalRow.assets
+              .netWorth
+          ).toLocaleString()}`}
+          icon={
+            <IconChartLine
+              size={18}
+            />
+          }
+        />
+      </Grid.Col>
 
-                <Title
-                  order={2}
-                >
-                  ₹
-                  {Math.round(
-                    card.value
-                  ).toLocaleString()}
-                </Title>
-              </Stack>
-            </Card>
-          </Grid.Col>
-        )
-      )}
+      <Grid.Col
+        span={{
+          base: 12,
+          md: 3,
+        }}
+      >
+        <MetricCard
+          title="Cash"
+          value={`₹${Math.round(
+            finalRow.assets
+              .cash
+          ).toLocaleString()}`}
+          icon={
+            <IconWallet
+              size={18}
+            />
+          }
+        />
+      </Grid.Col>
+
+      <Grid.Col
+        span={{
+          base: 12,
+          md: 3,
+        }}
+      >
+        <MetricCard
+          title="Investment Corpus"
+          value={`₹${Math.round(
+            finalRow.assets
+              .investmentCorpus
+          ).toLocaleString()}`}
+          icon={
+            <IconCoins
+              size={18}
+            />
+          }
+        />
+      </Grid.Col>
+
+      <Grid.Col
+        span={{
+          base: 12,
+          md: 3,
+        }}
+      >
+        <MetricCard
+          title="Active Instruments"
+          value={String(
+            config.instruments
+              .length
+          )}
+          icon={
+            <IconBuildingBank
+              size={18}
+            />
+          }
+        />
+      </Grid.Col>
     </Grid>
   );
 }

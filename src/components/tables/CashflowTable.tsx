@@ -1,8 +1,6 @@
 import {
-  Card,
   ScrollArea,
   Table,
-  Text,
 } from "@mantine/core";
 
 import {

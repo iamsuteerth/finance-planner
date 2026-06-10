@@ -17,6 +17,7 @@ import NetWorthTable
 
 import InstrumentsTable
   from "../tables/InstrumentsTable";
+import OneOffExpensesTable from "../tables/OneOffExpenses";
 
 export default function DashboardTabs() {
   return (
@@ -44,6 +45,10 @@ export default function DashboardTabs() {
 
           <Tabs.Tab value="instruments">
             Instruments
+          </Tabs.Tab>
+
+          <Tabs.Tab value="expenses">
+            One-Offs
           </Tabs.Tab>
 
           <Tabs.Tab value="timeline">
@@ -77,6 +82,13 @@ export default function DashboardTabs() {
           pt="lg"
         >
           <InstrumentsTable />
+        </Tabs.Panel>
+
+        <Tabs.Panel
+          value="expenses"
+          pt="lg"
+        >
+          <OneOffExpensesTable />
         </Tabs.Panel>
 
         <Tabs.Panel

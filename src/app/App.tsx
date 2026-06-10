@@ -2,7 +2,7 @@ import PlannerShell
   from "../components/layout/AppShell";
 
 import SummaryCards
-  from "../components/summary/SummaryCards";
+  from "../components/SummaryCards";
 
 import NetWorthChart
   from "../components/charts/NetWorthChart";
