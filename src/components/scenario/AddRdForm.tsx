@@ -17,6 +17,9 @@ import MonthSelect
 import {
   usePlannerStore,
 } from "../../store/plannerStore";
+import InstrumentPreview from "./InstrumentPreview";
+import { formatMonth } from "../../engine/monthFormatting";
+import { addMonths } from "../../engine/dateUtils";
 
 export default function AddRdForm() {
   const addRd =
@@ -58,6 +61,30 @@ export default function AddRdForm() {
     24
   );
 
+  const totalContribution =
+    monthlyContribution *
+    durationMonths;
+
+  const maturityValue =
+    totalContribution *
+    Math.pow(
+      1 +
+      rate / 100,
+      durationMonths / 12
+    );
+
+  const interest =
+    maturityValue -
+    totalContribution;
+
+  const maturityMonth =
+    month
+      ? addMonths(
+        month,
+        durationMonths
+      )
+      : null;
+
   return (
     <Stack>
       <MonthSelect
@@ -65,8 +92,8 @@ export default function AddRdForm() {
         onChange={(value) =>
           setMonth(
             value as
-              | MonthKey
-              | null
+            | MonthKey
+            | null
           )
         }
       />
@@ -117,6 +144,20 @@ export default function AddRdForm() {
             Number(value)
           )
         }
+      />
+
+      <InstrumentPreview
+        title="Recurring Deposit Forecast"
+        subtitle={`₹${monthlyContribution.toLocaleString()}/month`}
+        maturityValue={`₹${Math.round(
+          maturityValue
+        ).toLocaleString()}`}
+        interest={`₹${Math.round(
+          interest
+        ).toLocaleString()}`}
+        maturityMonth={formatMonth(
+          maturityMonth!
+        )}
       />
 
       <Button

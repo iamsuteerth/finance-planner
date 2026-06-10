@@ -17,6 +17,9 @@ import MonthSelect
 import {
   usePlannerStore,
 } from "../../store/plannerStore";
+import InstrumentPreview from "./InstrumentPreview";
+import { addMonths } from "../../engine/dateUtils";
+import { formatMonth } from "../../engine/monthFormatting";
 
 export default function AddFdForm() {
   const addFd =
@@ -58,6 +61,26 @@ export default function AddFdForm() {
     12
   );
 
+  const maturityValue =
+    principal *
+    Math.pow(
+      1 +
+      rate / 100,
+      durationMonths / 12
+    );
+
+  const interest =
+    maturityValue -
+    principal;
+
+  const maturityMonth =
+    month
+      ? addMonths(
+        month,
+        durationMonths
+      )
+      : null;
+
   return (
     <Stack>
       <MonthSelect
@@ -65,8 +88,8 @@ export default function AddFdForm() {
         onChange={(value) =>
           setMonth(
             value as
-              | MonthKey
-              | null
+            | MonthKey
+            | null
           )
         }
       />
@@ -115,6 +138,20 @@ export default function AddFdForm() {
             Number(value)
           )
         }
+      />
+
+      <InstrumentPreview
+        title="Fixed Deposit Forecast"
+        subtitle={`₹${principal.toLocaleString()} @ ${rate}%`}
+        maturityValue={`₹${Math.round(
+          maturityValue
+        ).toLocaleString()}`}
+        interest={`₹${Math.round(
+          interest
+        ).toLocaleString()}`}
+        maturityMonth={formatMonth(
+          maturityMonth!
+        )}
       />
 
       <Button

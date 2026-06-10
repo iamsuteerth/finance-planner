@@ -1,6 +1,5 @@
 import {
   Badge,
-  Card,
   Group,
   Stack,
   Text,
@@ -20,6 +19,10 @@ import {
 import {
   useSimulation,
 } from "../../hooks/useSimulation";
+
+import {
+  formatMonth,
+} from "../../engine/monthFormatting";
 
 function getEventIcon(
   type: string
@@ -83,6 +86,47 @@ function getEventIcon(
   }
 }
 
+function getEventLabel(
+  type: string
+) {
+  switch (type) {
+    case "BONUS_INCOME":
+      return "Bonus Income";
+
+    case "SALARY_CHANGE":
+      return "Salary Change";
+
+    case "ONE_OFF_EXPENSE":
+      return "Expense";
+
+    case "FD_CREATED":
+      return "FD Created";
+
+    case "FD_MATURED":
+      return "FD Matured";
+
+    case "RD_CREATED":
+      return "RD Created";
+
+    case "RD_MATURED":
+      return "RD Matured";
+
+    default:
+      return type;
+  }
+}
+
+function formatMoney(
+  amount: number
+) {
+  return (
+    "₹" +
+    Math.round(
+      amount
+    ).toLocaleString()
+  );
+}
+
 export default function EventTimeline() {
   const result =
     useSimulation();
@@ -94,84 +138,75 @@ export default function EventTimeline() {
     );
 
   return (
-    <Card
-      mt="lg"
-      radius="xl"
-      shadow="xs"
-      withBorder
-      p="lg"
+    <Timeline
+      bulletSize={30}
+      lineWidth={2}
     >
-      <Stack>
-        <Text fw={700}>
-          Financial Timeline
-        </Text>
-
-        <Timeline
-          active={
-            rows.length
-          }
-          bulletSize={28}
-          lineWidth={2}
-        >
-          {rows.map(
-            (row) =>
-              row.events.map(
-                (event) => (
-                  <Timeline.Item
-                    key={
-                      event.id
-                    }
-                    bullet={
-                      <ThemeIcon
-                        variant="light"
-                        radius="xl"
-                        size="md"
-                      >
-                        {getEventIcon(
-                          event.type
-                        )}
-                      </ThemeIcon>
-                    }
-                    title={
-                      event.description
-                    }
+      {rows.flatMap(
+        (row) =>
+          row.events.map(
+            (event) => (
+              <Timeline.Item
+                key={
+                  event.id
+                }
+                bullet={
+                  <ThemeIcon
+                    size="md"
+                    radius="xl"
+                    variant="light"
                   >
-                    <Group
-                      mt={4}
-                    >
-                      <Badge
-                        variant="light"
-                      >
-                        {
-                          row.month
-                        }
-                      </Badge>
-
-                      <Badge
-                        variant="outline"
-                      >
-                        {
-                          event.type
-                        }
-                      </Badge>
-                    </Group>
-
-                    <Text
-                      size="sm"
-                      c="dimmed"
-                      mt={4}
-                    >
-                      ₹
-                      {Math.round(
-                        event.amount
-                      ).toLocaleString()}
+                    {getEventIcon(
+                      event.type
+                    )}
+                  </ThemeIcon>
+                }
+                title={
+                  <Group
+                    gap="xs"
+                  >
+                    <Text fw={600}>
+                      {
+                        event.description
+                      }
                     </Text>
-                  </Timeline.Item>
-                )
-              )
-          )}
-        </Timeline>
-      </Stack>
-    </Card>
+
+                    <Badge
+                      variant="light"
+                      size="sm"
+                    >
+                      {getEventLabel(
+                        event.type
+                      )}
+                    </Badge>
+                  </Group>
+                }
+              >
+                <Stack
+                  gap={4}
+                  mt={4}
+                >
+                  <Text
+                    size="sm"
+                    c="dimmed"
+                  >
+                    {formatMonth(
+                      row.month
+                    )}
+                  </Text>
+
+                  <Text
+                    fw={500}
+                  >
+                    {formatMoney(
+                      event.amount
+                    )}
+                  </Text>
+                </Stack>
+              </Timeline.Item>
+            )
+          )
+      )}
+    </Timeline>
   );
 }

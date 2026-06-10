@@ -1,62 +1,109 @@
 import {
-  Alert,
+  Badge,
+  Card,
+  Group,
+  SimpleGrid,
+  Stack,
   Text,
+  ThemeIcon,
 } from "@mantine/core";
 
-interface Props {
-  maturityValue: number;
+import {
+  IconTrendingUp,
+} from "@tabler/icons-react";
 
-  principal: number;
+interface Props {
+  title: string;
+
+  maturityValue: string;
+
+  interest: string;
 
   maturityMonth: string;
+
+  subtitle?: string;
 }
 
-export default function InstrumentPreview(
-  props: Props
-) {
-  const interest =
-    props.maturityValue -
-    props.principal;
-
+export default function InstrumentPreview({
+  title,
+  maturityValue,
+  interest,
+  maturityMonth,
+  subtitle,
+}: Props) {
   return (
-    <Alert
-      color="blue"
-      variant="light"
+    <Card
+      radius="xl"
+      withBorder
+      bg="var(--mantine-color-body)"
     >
-      <Text fw={600}>
-        Expected Outcome
-      </Text>
+      <Stack gap="md">
+        <Group
+          justify="space-between"
+        >
+          <Stack gap={0}>
+            <Text
+              fw={700}
+            >
+              {title}
+            </Text>
 
-      <Text size="sm">
-        Principal:
-        {" "}
-        ₹
-        {props.principal.toLocaleString()}
-      </Text>
+            {subtitle && (
+              <Text
+                size="sm"
+                c="dimmed"
+              >
+                {subtitle}
+              </Text>
+            )}
+          </Stack>
 
-      <Text size="sm">
-        Maturity:
-        {" "}
-        ₹
-        {Math.round(
-          props.maturityValue
-        ).toLocaleString()}
-      </Text>
+          <ThemeIcon
+            size="lg"
+            radius="xl"
+            variant="light"
+          >
+            <IconTrendingUp
+              size={18}
+            />
+          </ThemeIcon>
+        </Group>
 
-      <Text size="sm">
-        Interest:
-        {" "}
-        ₹
-        {Math.round(
-          interest
-        ).toLocaleString()}
-      </Text>
+        <SimpleGrid cols={2}>
+          <div>
+            <Text
+              size="xs"
+              c="dimmed"
+            >
+              Maturity Value
+            </Text>
 
-      <Text size="sm">
-        Matures:
-        {" "}
-        {props.maturityMonth}
-      </Text>
-    </Alert>
+            <Text fw={700}>
+              {maturityValue}
+            </Text>
+          </div>
+
+          <div>
+            <Text
+              size="xs"
+              c="dimmed"
+            >
+              Interest Earned
+            </Text>
+
+            <Text fw={700}>
+              {interest}
+            </Text>
+          </div>
+        </SimpleGrid>
+
+        <Badge
+          variant="light"
+          size="lg"
+        >
+          Matures {maturityMonth}
+        </Badge>
+      </Stack>
+    </Card>
   );
 }
