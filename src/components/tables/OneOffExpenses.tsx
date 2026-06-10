@@ -1,4 +1,5 @@
 import {
+  Badge,
   ScrollArea,
   Table,
 } from "@mantine/core";
@@ -73,9 +74,14 @@ export default function OneOffExpensesTable() {
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    expense.amount
-                  )}
+                  <Badge
+                    color="red"
+                    variant="light"
+                  >
+                    {money(
+                      expense.amount
+                    )}
+                  </Badge>
                 </Table.Td>
               </Table.Tr>
             )

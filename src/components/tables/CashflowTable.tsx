@@ -1,6 +1,8 @@
 import {
+  Badge,
   ScrollArea,
   Table,
+  Text,
 } from "@mantine/core";
 
 import {
@@ -90,44 +92,71 @@ export default function CashflowTable() {
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.cashflow
-                      .income
-                  )}
+                  <Badge
+                    color="green"
+                    variant="light"
+                  >
+                    {money(
+                      row.cashflow
+                        .income
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.cashflow
-                      .flatExpense
-                  )}
+                  <Badge
+                    color="red"
+                    variant="light"
+                  >
+                    {money(
+                      row.cashflow
+                        .flatExpense
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.cashflow
-                      .creditCardExpense
-                  )}
+                  <Badge
+                    color="orange"
+                    variant="light"
+                  >
+                    {money(
+                      row.cashflow
+                        .creditCardExpense
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.cashflow
-                      .oneOffExpense
-                  )}
+                  <Badge
+                    color="red"
+                    variant="outline"
+                  >
+                    {money(
+                      row.cashflow
+                        .oneOffExpense
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.cashflow
-                      .investmentAmount
-                  )}
+                  <Badge
+                    color="grape"
+                    variant="light"
+                  >
+                    {money(
+                      row.cashflow
+                        .investmentAmount
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.closingBalance
-                  )}
+                  <Text fw={700}>
+                    {money(
+                      row.closingBalance
+                    )}
+                  </Text>
                 </Table.Td>
               </Table.Tr>
             )

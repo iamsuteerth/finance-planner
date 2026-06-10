@@ -1,6 +1,8 @@
 import {
+  Badge,
   ScrollArea,
   Table,
+  Text,
 } from "@mantine/core";
 
 import {
@@ -31,6 +33,7 @@ export default function NetWorthTable() {
       <Table
         striped
         highlightOnHover
+        verticalSpacing="sm"
       >
         <Table.Thead>
           <Table.Tr>
@@ -75,35 +78,59 @@ export default function NetWorthTable() {
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.assets.cash
-                  )}
+                  <Text fw={500}>
+                    {money(
+                      row.assets.cash
+                    )}
+                  </Text>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.assets
-                      .investmentCorpus
-                  )}
+                  <Badge
+                    variant="light"
+                    color="grape"
+                  >
+                    {money(
+                      row.assets
+                        .investmentCorpus
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.assets.fdValue
-                  )}
+                  <Badge
+                    variant="light"
+                    color="cyan"
+                  >
+                    {money(
+                      row.assets
+                        .fdValue
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.assets.rdValue
-                  )}
+                  <Badge
+                    variant="light"
+                    color="violet"
+                  >
+                    {money(
+                      row.assets
+                        .rdValue
+                    )}
+                  </Badge>
                 </Table.Td>
 
                 <Table.Td>
-                  {money(
-                    row.assets
-                      .netWorth
-                  )}
+                  <Text
+                    fw={700}
+                    size="md"
+                  >
+                    {money(
+                      row.assets
+                        .netWorth
+                    )}
+                  </Text>
                 </Table.Td>
               </Table.Tr>
             )

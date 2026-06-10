@@ -6,11 +6,15 @@ import ReactDOM
 import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+
 import App
   from "./app/App";
 
-import AppProviders
-  from "./app/AppProviders";
+import { AppProvider } from "./app/AppProvider";
 
 ReactDOM.createRoot(
   document.getElementById(
@@ -18,8 +22,8 @@ ReactDOM.createRoot(
   )!
 ).render(
   <React.StrictMode>
-    <AppProviders>
+    <AppProvider>
       <App />
-    </AppProviders>
+    </AppProvider>
   </React.StrictMode>
 );

@@ -1,6 +1,7 @@
 import {
   AppShell,
   Burger,
+  Drawer,
   Group,
   Stack,
   Text,
@@ -30,77 +31,92 @@ export default function PlannerShell({
 }: Props) {
   const [
     opened,
-    { toggle },
-  ] = useDisclosure();
+    { open, close },
+  ] = useDisclosure(
+    false
+  );
 
   return (
-    <AppShell
-      header={{
-        height: 70,
-      }}
-      navbar={{
-        width: 340,
-
-        breakpoint:
-          "sm",
-
-        collapsed: {
-          mobile:
-            !opened,
-        },
-      }}
-      padding="lg"
-    >
-      <AppShell.Header>
-        <Group
-          justify="space-between"
-          h="100%"
-          px="md"
-        >
-          <Group>
-            <Burger
-              opened={
-                opened
-              }
-              onClick={
-                toggle
-              }
-              hiddenFrom="sm"
-              size="sm"
-            />
-
-            <Stack gap={0}>
-              <Title order={4}>
-                Finance Planner
-              </Title>
-
-              <Text
-                size="xs"
-                c="dimmed"
-              >
-                Personal Wealth
-                Forecast
-              </Text>
-            </Stack>
-          </Group>
-
-          <ThemeToggle />
-        </Group>
-      </AppShell.Header>
-
-      <AppShell.Navbar
-        p="lg"
-        style={{
-          overflowY: "auto",
-          overflowX: "hidden",
-        }}
+    <>
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Scenario Lab"
+        size="100%"
+        hiddenFrom="sm"
       >
         <ScenarioPanel />
-      </AppShell.Navbar>
+      </Drawer>
 
-      <AppShell.Main>
-        {children}
-      </AppShell.Main>
-    </AppShell>
+      <AppShell
+        header={{
+          height: 70,
+        }}
+        navbar={{
+          width: 340,
+
+          breakpoint:
+            "sm",
+
+          collapsed: {
+            mobile: true,
+          },
+        }}
+        padding="lg"
+      >
+        <AppShell.Header>
+          <Group
+            justify="space-between"
+            h="100%"
+            px="md"
+          >
+            <Group>
+              <Burger
+                hiddenFrom="sm"
+                opened={opened}
+                onClick={open}
+                size="sm"
+              />
+
+              <Stack gap={0}>
+                <Title
+                  order={4}
+                  fw={700}
+                >
+                  Finance Planner
+                </Title>
+
+                <Text
+                  size="xs"
+                  c="dimmed"
+                >
+                  Personal Wealth
+                  Forecast
+                </Text>
+              </Stack>
+            </Group>
+
+            <ThemeToggle />
+          </Group>
+        </AppShell.Header>
+
+        <AppShell.Navbar
+          visibleFrom="sm"
+          p="lg"
+          style={{
+            overflowY:
+              "auto",
+            overflowX:
+              "hidden",
+          }}
+        >
+          <ScenarioPanel />
+        </AppShell.Navbar>
+
+        <AppShell.Main>
+          {children}
+        </AppShell.Main>
+      </AppShell>
+    </>
   );
 }

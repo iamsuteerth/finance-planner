@@ -127,6 +127,32 @@ function formatMoney(
   );
 }
 
+function getEventColor(
+  type: string
+) {
+  switch (type) {
+    case "BONUS_INCOME":
+      return "green";
+
+    case "SALARY_CHANGE":
+      return "blue";
+
+    case "ONE_OFF_EXPENSE":
+      return "red";
+
+    case "FD_CREATED":
+    case "FD_MATURED":
+      return "cyan";
+
+    case "RD_CREATED":
+    case "RD_MATURED":
+      return "grape";
+
+    default:
+      return "gray";
+  }
+}
+
 export default function EventTimeline() {
   const result =
     useSimulation();
@@ -155,6 +181,9 @@ export default function EventTimeline() {
                     size="md"
                     radius="xl"
                     variant="light"
+                    color={getEventColor(
+                      event.type
+                    )}
                   >
                     {getEventIcon(
                       event.type
@@ -164,14 +193,18 @@ export default function EventTimeline() {
                 title={
                   <Group
                     gap="xs"
+                    align="center"
                   >
-                    <Text fw={600}>
+                    <Text fw={600} size="sm">
                       {
                         event.description
                       }
                     </Text>
 
                     <Badge
+                      color={getEventColor(
+                        event.type
+                      )}
                       variant="light"
                       size="sm"
                     >
@@ -187,8 +220,9 @@ export default function EventTimeline() {
                   mt={4}
                 >
                   <Text
-                    size="sm"
+                    size="xs"
                     c="dimmed"
+                    fw={500}
                   >
                     {formatMonth(
                       row.month
@@ -196,7 +230,8 @@ export default function EventTimeline() {
                   </Text>
 
                   <Text
-                    fw={500}
+                    fw={700}
+                    size="lg"
                   >
                     {formatMoney(
                       event.amount

@@ -8,10 +8,10 @@ import {
 } from "@mantine/core";
 
 import {
+  IconBuildingBank,
+  IconChartLine,
   IconCoins,
   IconWallet,
-  IconChartLine,
-  IconBuildingBank,
 } from "@tabler/icons-react";
 
 import {
@@ -37,9 +37,10 @@ function MetricCard({
 }) {
   return (
     <Card
-      radius="xl"
+      radius="24px"
       withBorder
       p="lg"
+      shadow="xs"
     >
       <Group
         justify="space-between"
@@ -48,21 +49,43 @@ function MetricCard({
         <Text
           size="sm"
           c="dimmed"
+          fw={500}
         >
           {title}
         </Text>
 
         <ThemeIcon
+          size="lg"
           radius="xl"
           variant="light"
+          color={
+            title === "Net Worth"
+              ? "green"
+              : title === "Cash"
+              ? "blue"
+              : title === "Investments"
+              ? "grape"
+              : "orange"
+          }
         >
           {icon}
         </ThemeIcon>
       </Group>
 
-      <Title order={3}>
+      <Title
+        order={2}
+        fw={700}
+      >
         {value}
       </Title>
+
+      <Text
+        size="xs"
+        c="dimmed"
+        mt={6}
+      >
+        Current Forecast
+      </Text>
     </Card>
   );
 }
@@ -131,7 +154,7 @@ export default function SummaryCards() {
         }}
       >
         <MetricCard
-          title="Investment Corpus"
+          title="Investments"
           value={`₹${Math.round(
             finalRow.assets
               .investmentCorpus
@@ -151,7 +174,7 @@ export default function SummaryCards() {
         }}
       >
         <MetricCard
-          title="Active Instruments"
+          title="Instruments"
           value={String(
             config.instruments
               .length

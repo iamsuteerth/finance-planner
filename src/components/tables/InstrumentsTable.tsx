@@ -1,6 +1,8 @@
 import {
+  Badge,
   ScrollArea,
   Table,
+  Text,
 } from "@mantine/core";
 
 import {
@@ -38,6 +40,7 @@ export default function InstrumentsTable() {
       <Table
         striped
         highlightOnHover
+        verticalSpacing="sm"
       >
         <Table.Thead>
           <Table.Tr>
@@ -107,6 +110,10 @@ export default function InstrumentsTable() {
                     12
                 );
 
+              const interest =
+                maturityValue -
+                principal;
+
               return (
                 <Table.Tr
                   key={
@@ -120,9 +127,19 @@ export default function InstrumentsTable() {
                   </Table.Td>
 
                   <Table.Td>
-                    {
-                      instrument.type
-                    }
+                    <Badge
+                      color={
+                        instrument.type ===
+                        "FD"
+                          ? "cyan"
+                          : "grape"
+                      }
+                      variant="light"
+                    >
+                      {
+                        instrument.type
+                      }
+                    </Badge>
                   </Table.Td>
 
                   <Table.Td>
@@ -135,7 +152,8 @@ export default function InstrumentsTable() {
                   <Table.Td>
                     {
                       instrument.durationMonths
-                    }
+                    }{" "}
+                    Months
                   </Table.Td>
 
                   <Table.Td>
@@ -157,16 +175,23 @@ export default function InstrumentsTable() {
                   </Table.Td>
 
                   <Table.Td>
-                    {money(
-                      maturityValue -
-                        principal
-                    )}
+                    <Text
+                      c="green"
+                    >
+                      {money(
+                        interest
+                      )}
+                    </Text>
                   </Table.Td>
 
                   <Table.Td>
-                    {money(
-                      maturityValue
-                    )}
+                    <Text
+                      fw={700}
+                    >
+                      {money(
+                        maturityValue
+                      )}
+                    </Text>
                   </Table.Td>
                 </Table.Tr>
               );

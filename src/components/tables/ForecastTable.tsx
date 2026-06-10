@@ -4,18 +4,26 @@ import {
   ScrollArea,
   Stack,
   Table,
+  Text,
 } from "@mantine/core";
 
 import {
   useSimulation,
 } from "../../hooks/useSimulation";
 
-function formatCurrency(
+import {
+  formatMonth,
+} from "../../engine/monthFormatting";
+
+function money(
   value: number
 ) {
-  return `₹${Math.round(
-    value
-  ).toLocaleString()}`;
+  return (
+    "₹" +
+    Math.round(
+      value
+    ).toLocaleString()
+  );
 }
 
 export default function ForecastTable() {
@@ -24,19 +32,15 @@ export default function ForecastTable() {
 
   return (
     <Stack gap="md">
-      <Group
-        justify="space-between"
-      >
-        <div />
+      <Group justify="center">
         <Badge
+          size="lg"
           variant="light"
         >
           {
             result.rows.length
-          }{" "}
-          Months
+          } Months
         </Badge>
-        <div/>
       </Group>
 
       <ScrollArea>
@@ -82,38 +86,55 @@ export default function ForecastTable() {
                   }
                 >
                   <Table.Td>
-                    {row.month}
-                  </Table.Td>
-
-                  <Table.Td>
-                    {formatCurrency(
-                      row.assets.cash
+                    {formatMonth(
+                      row.month
                     )}
                   </Table.Td>
 
                   <Table.Td>
-                    {formatCurrency(
-                      row.assets
-                        .netWorth
-                    )}
+                    <Text fw={500}>
+                      {money(
+                        row.assets.cash
+                      )}
+                    </Text>
                   </Table.Td>
 
                   <Table.Td>
-                    {formatCurrency(
-                      row.assets
-                        .fdValue
-                    )}
-                  </Table.Td>
-
-                  <Table.Td>
-                    {formatCurrency(
-                      row.assets
-                        .rdValue
-                    )}
+                    <Text fw={700}>
+                      {money(
+                        row.assets
+                          .netWorth
+                      )}
+                    </Text>
                   </Table.Td>
 
                   <Table.Td>
                     <Badge
+                      color="cyan"
+                      variant="light"
+                    >
+                      {money(
+                        row.assets
+                          .fdValue
+                      )}
+                    </Badge>
+                  </Table.Td>
+
+                  <Table.Td>
+                    <Badge
+                      color="grape"
+                      variant="light"
+                    >
+                      {money(
+                        row.assets
+                          .rdValue
+                      )}
+                    </Badge>
+                  </Table.Td>
+
+                  <Table.Td>
+                    <Badge
+                      color="blue"
                       variant="light"
                     >
                       {
