@@ -106,20 +106,6 @@ export default function ScenarioPanel() {
 
   return (
     <Stack gap="lg">
-      <div>
-        <Text fw={700}>
-          Scenario Lab
-        </Text>
-
-        <Text
-          size="sm"
-          c="dimmed"
-        >
-          Explore financial
-          what-if scenarios.
-        </Text>
-      </div>
-
       <Tabs
         defaultValue="expense"
       >
@@ -204,6 +190,12 @@ export default function ScenarioPanel() {
             "";
         }}
       />
+      <Text
+        size="xs"
+        c="dimmed"
+      >
+        Import or export complete planner snapshots, including configuration and scenario changes.
+      </Text>
       <Group grow>
         <Button
           variant="default"
@@ -213,6 +205,7 @@ export default function ScenarioPanel() {
         >
           Import
         </Button>
+
         <Button
           variant="default"
           onClick={() =>
@@ -234,6 +227,7 @@ export default function ScenarioPanel() {
         </Button>
       </Group>
       <Divider />
+
       <ActiveInstruments />
 
       <Divider />

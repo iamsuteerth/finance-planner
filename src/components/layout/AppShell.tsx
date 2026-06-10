@@ -41,7 +41,19 @@ export default function PlannerShell({
       <Drawer
         opened={opened}
         onClose={close}
-        title="Scenario Lab"
+        title={<div>
+          <Text fw={700}>
+            Scenario Lab
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Explore financial
+            what-if scenarios.
+          </Text>
+        </div>}
         size="100%"
         hiddenFrom="sm"
       >

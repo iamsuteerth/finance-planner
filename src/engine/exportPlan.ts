@@ -18,7 +18,10 @@ export function exportPlan(
     new Blob(
       [
         JSON.stringify(
-          data,
+          {
+            version: 1,
+            ...data,
+          },
           null,
           2
         ),
