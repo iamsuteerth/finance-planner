@@ -1,6 +1,8 @@
 import {
   Badge,
+  Paper,
   ScrollArea,
+  Stack,
   Table,
   Text,
 } from "@mantine/core";
@@ -35,9 +37,39 @@ export default function InstrumentsTable() {
         state.config
     );
 
+  if (
+    config.instruments.length === 0
+  ) {
+    return (
+      <Paper
+        withBorder
+        radius="xl"
+        p="xl"
+      >
+        <Stack
+          gap={4}
+          align="center"
+        >
+          <Text fw={600}>
+            No Instruments Yet
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Create an FD or RD from
+            the Scenario Lab.
+          </Text>
+        </Stack>
+      </Paper>
+    );
+  }
+
   return (
     <ScrollArea>
       <Table
+        miw={750}
         striped
         highlightOnHover
         verticalSpacing="sm"
@@ -95,19 +127,19 @@ export default function InstrumentsTable() {
 
               const principal =
                 instrument.type ===
-                "FD"
+                  "FD"
                   ? instrument.principal
                   : instrument.monthlyContribution *
-                    instrument.durationMonths;
+                  instrument.durationMonths;
 
               const maturityValue =
                 principal *
                 Math.pow(
                   1 +
-                    instrument.rate /
-                      100,
+                  instrument.rate /
+                  100,
                   instrument.durationMonths /
-                    12
+                  12
                 );
 
               const interest =
@@ -130,7 +162,7 @@ export default function InstrumentsTable() {
                     <Badge
                       color={
                         instrument.type ===
-                        "FD"
+                          "FD"
                           ? "cyan"
                           : "grape"
                       }

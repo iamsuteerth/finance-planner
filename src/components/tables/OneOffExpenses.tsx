@@ -1,7 +1,10 @@
 import {
   Badge,
+  Paper,
   ScrollArea,
+  Stack,
   Table,
+  Text,
 } from "@mantine/core";
 
 import {
@@ -30,9 +33,40 @@ export default function OneOffExpensesTable() {
         state.config
     );
 
+  if (
+    config.oneOffExpenses
+      .length === 0
+  ) {
+    return (
+      <Paper
+        withBorder
+        radius="xl"
+        p="xl"
+      >
+        <Stack
+          gap={4}
+          align="center"
+        >
+          <Text fw={600}>
+            No One-Off Expenses
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Planned expenses will
+            appear here.
+          </Text>
+        </Stack>
+      </Paper>
+    );
+  }
+
   return (
     <ScrollArea>
       <Table
+      miw={400}
         striped
         highlightOnHover
         verticalSpacing="sm"

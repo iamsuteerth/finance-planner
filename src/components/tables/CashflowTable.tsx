@@ -1,6 +1,8 @@
 import {
   Badge,
+  Paper,
   ScrollArea,
+  Stack,
   Table,
   Text,
 } from "@mantine/core";
@@ -28,9 +30,39 @@ export default function CashflowTable() {
   const result =
     useSimulation();
 
+  if (
+    result.rows.length === 0
+  ) {
+    return (
+      <Paper
+        withBorder
+        radius="xl"
+        p="xl"
+      >
+        <Stack
+          align="center"
+          gap={4}
+        >
+          <Text fw={600}>
+            No Cashflow Data
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Cashflow projections
+            will appear here.
+          </Text>
+        </Stack>
+      </Paper>
+    );
+  }
+
   return (
     <ScrollArea>
       <Table
+        miw={800}
         striped
         highlightOnHover
         verticalSpacing="sm"

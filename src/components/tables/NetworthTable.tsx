@@ -1,6 +1,8 @@
 import {
   Badge,
+  Paper,
   ScrollArea,
+  Stack,
   Table,
   Text,
 } from "@mantine/core";
@@ -28,9 +30,39 @@ export default function NetWorthTable() {
   const result =
     useSimulation();
 
+  if (
+    result.rows.length === 0
+  ) {
+    return (
+      <Paper
+        withBorder
+        radius="xl"
+        p="xl"
+      >
+        <Stack
+          align="center"
+          gap={4}
+        >
+          <Text fw={600}>
+            No Net Worth Data
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Net worth projections
+            will appear here.
+          </Text>
+        </Stack>
+      </Paper>
+    );
+  }
+
   return (
     <ScrollArea>
       <Table
+        miw={750}
         striped
         highlightOnHover
         verticalSpacing="sm"

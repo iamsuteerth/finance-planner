@@ -53,9 +53,18 @@ export default function NetWorthChart() {
       style={{ minWidth: 0 }}
     >
       <Stack style={{ minWidth: 0 }}>
-        <Text fw={700}>
-          Wealth Projection
-        </Text>
+        <Stack gap={0}>
+          <Text fw={700}>
+            Wealth Projection
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Cash, investments and total net worth over time
+          </Text>
+        </Stack>
         <LineChart
           h={360}
           w="100%"
@@ -63,10 +72,26 @@ export default function NetWorthChart() {
           dataKey="month"
           withLegend
           curveType="monotone"
+          valueFormatter={(value) =>
+            "₹" +
+            Number(value).toLocaleString()
+          }
           series={[
-            { name: "cash", label: "Cash", color: "blue" },
-            { name: "investmentCorpus", label: "Investment Corpus", color: "green" },
-            { name: "netWorth", label: "Net Worth", color: "violet" },
+            {
+              name: "cash",
+              label: "Cash",
+              color: "blue",
+            },
+            {
+              name: "investmentCorpus",
+              label: "Investments",
+              color: "green",
+            },
+            {
+              name: "netWorth",
+              label: "Net Worth",
+              color: "violet",
+            },
           ]}
         />
       </Stack>

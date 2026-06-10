@@ -1,6 +1,7 @@
 import {
   Badge,
   Group,
+  Paper,
   Stack,
   Text,
   ThemeIcon,
@@ -162,6 +163,36 @@ export default function EventTimeline() {
       (row) =>
         row.events.length > 0
     );
+
+  if (
+    rows.length === 0
+  ) {
+    return (
+      <Paper
+        withBorder
+        radius="xl"
+        p="xl"
+      >
+        <Stack
+          gap={4}
+          align="center"
+        >
+          <Text fw={600}>
+            No Timeline Events
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Scenario changes and
+            investment lifecycle
+            events will appear here.
+          </Text>
+        </Stack>
+      </Paper>
+    );
+  }
 
   return (
     <Timeline

@@ -1,6 +1,7 @@
 import {
   Badge,
   Group,
+  Paper,
   ScrollArea,
   Stack,
   Table,
@@ -30,6 +31,35 @@ export default function ForecastTable() {
   const result =
     useSimulation();
 
+  if (
+    result.rows.length === 0
+  ) {
+    return (
+      <Paper
+        withBorder
+        radius="xl"
+        p="xl"
+      >
+        <Stack
+          align="center"
+          gap={4}
+        >
+          <Text fw={600}>
+            No Forecast Data
+          </Text>
+
+          <Text
+            size="sm"
+            c="dimmed"
+          >
+            Forecast projections
+            will appear here.
+          </Text>
+        </Stack>
+      </Paper>
+    );
+  }
+
   return (
     <Stack gap="md">
       <Group justify="center">
@@ -45,6 +75,7 @@ export default function ForecastTable() {
 
       <ScrollArea>
         <Table
+          miw={600}
           striped
           highlightOnHover
           verticalSpacing="sm"
