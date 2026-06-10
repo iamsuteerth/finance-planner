@@ -1,20 +1,16 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import configJson from "../data/config.json";
 
 import type { PlannerConfig } from "../types/config";
-
-import type { PlannerOverrides, } from "../types/overrides";
-
+import type { PlannerOverrides } from "../types/overrides";
 import { buildEffectiveConfig } from "../engine/buildEffectiveConfig";
-
 import type { MonthKey } from "../types/simulation";
 
 interface PlannerStore {
   baseConfig: PlannerConfig;
-
   overrides: PlannerOverrides;
-
   config: PlannerConfig;
 
   addTransientOneOffExpense: (
@@ -56,48 +52,37 @@ interface PlannerStore {
   ) => void;
 
   resetOverrides: () => void;
-
   resetAll: () => void;
+  loadPlan: (
+    baseConfig: PlannerConfig,
+    overrides: PlannerOverrides
+  ) => void;
 }
 
-const initialConfig =
-  configJson as PlannerConfig;
+const initialConfig = configJson as PlannerConfig;
 
-export const usePlannerStore =
-  create<PlannerStore>((set) => ({
-    baseConfig:
-      initialConfig,
+export const usePlannerStore = create<PlannerStore>()(
+  persist(
+    (set) => ({
+      baseConfig: initialConfig,
+      overrides: {},
+      config: initialConfig,
 
-    overrides: {},
-
-    config:
-      initialConfig,
-
-    addTransientOneOffExpense:
-      (
-        month,
-        amount,
-        label
-      ) =>
+      addTransientOneOffExpense: (month, amount, label) =>
         set((state) => {
-          const current =
-            state.overrides
-              .runtimeEvents ?? [];
+          const current = state.overrides.runtimeEvents ?? [];
 
           const overrides: PlannerOverrides = {
             ...state.overrides,
-
             runtimeEvents: [
               ...current,
               {
-                id:
-                  crypto.randomUUID(),
-                type:
-                  "ONE_OFF_EXPENSE",
+                id: crypto.randomUUID(),
+                type: "ONE_OFF_EXPENSE",
                 month,
                 amount,
                 label,
-              }
+              },
             ],
           };
 
@@ -107,11 +92,10 @@ export const usePlannerStore =
               state.baseConfig,
               overrides
             ),
-          } satisfies Partial<PlannerStore>;
+          };
         }),
 
-    addTransientFd:
-      (
+      addTransientFd: (
         month,
         principal,
         rate,
@@ -119,31 +103,19 @@ export const usePlannerStore =
         name
       ) =>
         set((state) => {
-          const current =
-            state.overrides
-              .runtimeEvents ?? [];
+          const current = state.overrides.runtimeEvents ?? [];
 
           const overrides: PlannerOverrides = {
             ...state.overrides,
-
             runtimeEvents: [
               ...current,
-
               {
-                id:
-                  crypto.randomUUID(),
-
+                id: crypto.randomUUID(),
                 type: "FD",
-
                 name,
-
                 principal,
-
                 rate,
-
-                startMonth:
-                  month,
-
+                startMonth: month,
                 durationMonths,
               },
             ],
@@ -151,17 +123,14 @@ export const usePlannerStore =
 
           return {
             overrides,
-
-            config:
-              buildEffectiveConfig(
-                state.baseConfig,
-                overrides
-              ),
+            config: buildEffectiveConfig(
+              state.baseConfig,
+              overrides
+            ),
           };
         }),
 
-    addTransientRd:
-      (
+      addTransientRd: (
         month,
         monthlyContribution,
         rate,
@@ -169,31 +138,19 @@ export const usePlannerStore =
         name
       ) =>
         set((state) => {
-          const current =
-            state.overrides
-              .runtimeEvents ?? [];
+          const current = state.overrides.runtimeEvents ?? [];
 
           const overrides: PlannerOverrides = {
             ...state.overrides,
-
             runtimeEvents: [
               ...current,
-
               {
-                id:
-                  crypto.randomUUID(),
-
+                id: crypto.randomUUID(),
                 type: "RD",
-
                 name,
-
                 monthlyContribution,
-
                 rate,
-
-                startMonth:
-                  month,
-
+                startMonth: month,
                 durationMonths,
               },
             ],
@@ -201,42 +158,30 @@ export const usePlannerStore =
 
           return {
             overrides,
-
-            config:
-              buildEffectiveConfig(
-                state.baseConfig,
-                overrides
-              ),
+            config: buildEffectiveConfig(
+              state.baseConfig,
+              overrides
+            ),
           };
         }),
 
-    addTransientBonusIncome:
-      (
+      addTransientBonusIncome: (
         month,
         amount,
         description
       ) =>
         set((state) => {
-          const current =
-            state.overrides
-              .runtimeEvents ?? [];
+          const current = state.overrides.runtimeEvents ?? [];
 
           const overrides: PlannerOverrides = {
             ...state.overrides,
-
             runtimeEvents: [
               ...current,
               {
-                id:
-                  crypto.randomUUID(),
-
-                type:
-                  "BONUS_INCOME",
-
+                id: crypto.randomUUID(),
+                type: "BONUS_INCOME",
                 month,
-
                 amount,
-
                 description,
               },
             ],
@@ -244,42 +189,30 @@ export const usePlannerStore =
 
           return {
             overrides,
-
-            config:
-              buildEffectiveConfig(
-                state.baseConfig,
-                overrides
-              ),
+            config: buildEffectiveConfig(
+              state.baseConfig,
+              overrides
+            ),
           };
         }),
 
-    addTransientSalaryChange:
-      (
+      addTransientSalaryChange: (
         effectiveMonth,
         newMonthlyIncome,
         description
       ) =>
         set((state) => {
-          const current =
-            state.overrides
-              .runtimeEvents ?? [];
+          const current = state.overrides.runtimeEvents ?? [];
 
           const overrides: PlannerOverrides = {
             ...state.overrides,
-
             runtimeEvents: [
               ...current,
               {
-                id:
-                  crypto.randomUUID(),
-
-                type:
-                  "SALARY_CHANGE",
-
+                id: crypto.randomUUID(),
+                type: "SALARY_CHANGE",
                 effectiveMonth,
-
                 newMonthlyIncome,
-
                 description,
               },
             ],
@@ -287,54 +220,93 @@ export const usePlannerStore =
 
           return {
             overrides,
-
-            config:
-              buildEffectiveConfig(
-                state.baseConfig,
-                overrides
-              ),
+            config: buildEffectiveConfig(
+              state.baseConfig,
+              overrides
+            ),
           };
         }),
 
-    setOverrides: (
-      incomingOverrides
-    ) =>
-      set((state) => {
-        const overrides = {
-          ...state.overrides,
-          ...incomingOverrides,
-        };
+      setOverrides: (incomingOverrides) =>
+        set((state) => {
+          const overrides = {
+            ...state.overrides,
+            ...incomingOverrides,
+          };
 
-        return {
+          return {
+            overrides,
+            config: buildEffectiveConfig(
+              state.baseConfig,
+              overrides
+            ),
+          };
+        }),
+
+      loadPlan: (
+        baseConfig,
+        overrides
+      ) =>
+        set({
+          baseConfig,
+
           overrides,
 
           config:
             buildEffectiveConfig(
-              state.baseConfig,
+              baseConfig,
               overrides
             ),
-        };
-      }),
+        }),
 
-    resetOverrides: () =>
-      set((state) => ({
-        overrides: {},
-
-        config:
-          buildEffectiveConfig(
+      resetOverrides: () =>
+        set((state) => ({
+          overrides: {},
+          config: buildEffectiveConfig(
             state.baseConfig,
             {}
           ),
-      })),
+        })),
 
-    resetAll: () =>
-      set({
-        baseConfig:
-          initialConfig,
+      resetAll: () =>
+        set({
+          baseConfig: initialConfig,
+          overrides: {},
+          config: initialConfig,
+        }),
+    }),
+    {
+      name:
+        "finance-planner-state",
 
-        overrides: {},
+      partialize:
+        (state) => ({
+          baseConfig:
+            state.baseConfig,
 
-        config:
-          initialConfig,
-      }),
-  }));
+          overrides:
+            state.overrides,
+        }),
+
+      merge: (
+        persistedState,
+        currentState
+      ) => {
+        const merged = {
+          ...currentState,
+          ...(persistedState as Partial<PlannerStore>),
+        };
+
+        return {
+          ...merged,
+
+          config:
+            buildEffectiveConfig(
+              merged.baseConfig,
+              merged.overrides
+            ),
+        };
+      },
+    }
+  )
+);

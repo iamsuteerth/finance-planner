@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Group,
   Stack,
   Tabs,
   Text,
@@ -28,12 +29,80 @@ import AddRdForm
 import ActiveInstruments
   from "./ActiveInstruments";
 
+import {
+  notifications,
+} from "@mantine/notifications";
+
+import { exportPlan } from "../../engine/exportPlan";
+import { useRef } from "react";
+import { importPlan } from "../../engine/importPlan";
+
 export default function ScenarioPanel() {
+  const baseConfig =
+    usePlannerStore(
+      (state) =>
+        state.baseConfig
+    );
+
+  const overrides =
+    usePlannerStore(
+      (state) =>
+        state.overrides
+    );
+
   const reset =
     usePlannerStore(
       (state) =>
         state.resetOverrides
     );
+
+  const loadPlan =
+    usePlannerStore(
+      (state) =>
+        state.loadPlan
+    );
+
+  const fileInputRef =
+    useRef<
+      HTMLInputElement
+    >(null);
+
+  const handleImport =
+    async (
+      file: File
+    ) => {
+      try {
+        const plan =
+          await importPlan(
+            file
+          );
+
+        loadPlan(
+          plan.baseConfig,
+          plan.overrides
+        );
+
+        notifications.show({
+          color: "green",
+
+          title:
+            "Plan Imported",
+
+          message:
+            "Scenario restored successfully",
+        });
+      } catch {
+        notifications.show({
+          color: "red",
+
+          title:
+            "Import Failed",
+
+          message:
+            "Invalid plan file",
+        });
+      }
+    };
 
   return (
     <Stack gap="lg">
@@ -111,14 +180,59 @@ export default function ScenarioPanel() {
           <AddRdForm />
         </Tabs.Panel>
       </Tabs>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json"
+        hidden
+        onChange={async (
+          event
+        ) => {
+          const file =
+            event.target
+              .files?.[0];
 
-      <Button
-        color="red"
-        variant="light"
-        onClick={reset}
-      >
-        Reset Scenario
-      </Button>
+          if (!file) {
+            return;
+          }
+
+          await handleImport(
+            file
+          );
+
+          event.target.value =
+            "";
+        }}
+      />
+      <Group grow>
+        <Button
+          variant="default"
+          onClick={() =>
+            fileInputRef.current?.click()
+          }
+        >
+          Import
+        </Button>
+        <Button
+          variant="default"
+          onClick={() =>
+            exportPlan({
+              baseConfig,
+              overrides,
+            })
+          }
+        >
+          Export
+        </Button>
+
+        <Button
+          color="red"
+          variant="light"
+          onClick={reset}
+        >
+          Reset
+        </Button>
+      </Group>
       <Divider />
       <ActiveInstruments />
 
