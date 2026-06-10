@@ -14,7 +14,8 @@ export function buildCashflowEvents(
   config: PlannerConfig,
   month: MonthKey
 ): FinancialEvent[] {
-  return config.oneOffExpenses
+  const events: FinancialEvent[] = [];
+  config.oneOffExpenses
     .filter(
       (expense) =>
         expense.month === month
@@ -33,4 +34,48 @@ export function buildCashflowEvents(
       description:
         expense.label,
     }));
+  config.bonusIncome
+    .filter(
+      (bonus) =>
+        bonus.month === month
+    )
+    .forEach((bonus) => {
+      events.push({
+        id: bonus.id,
+
+        month,
+
+        type:
+          "BONUS_INCOME",
+
+        amount:
+          bonus.amount,
+
+        description:
+          bonus.description,
+      });
+    });
+  config.salaryChanges
+    .filter(
+      (change) =>
+        change.effectiveMonth ===
+        month
+    )
+    .forEach((change) => {
+      events.push({
+        id: change.id,
+
+        month,
+
+        type:
+          "SALARY_CHANGE",
+
+        amount:
+          change.newMonthlyIncome,
+
+        description:
+          change.description,
+      });
+    });
+  return events;
 }

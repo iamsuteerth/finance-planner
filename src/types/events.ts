@@ -5,7 +5,9 @@ export type EventType =
   | "FD_CREATED"
   | "FD_MATURED"
   | "RD_CREATED"
-  | "RD_MATURED";
+  | "RD_MATURED"
+  | "BONUS_INCOME"
+  | "SALARY_CHANGE";
 
 export interface FinancialEvent {
   id: string;

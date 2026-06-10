@@ -20,17 +20,33 @@ export default function App() {
     >
       {result.rows
         .filter(
-          row =>
-            row.events.length > 0
+          (row) =>
+            row.month >= "2027-11" &&
+            row.month <= "2028-03"
         )
-        .map(row => (
-          <pre key={row.month}>
-            {JSON.stringify(
-              row.events,
-              null,
-              2
-            )}
-          </pre>
+        .map((row) => (
+          <div
+            key={row.month}
+            style={{
+              marginBottom: 24,
+            }}
+          >
+            <h3>{row.month}</h3>
+
+            <div>
+              Income:
+              {" "}
+              {row.cashflow.income}
+            </div>
+
+            <pre>
+              {JSON.stringify(
+                row.events,
+                null,
+                2
+              )}
+            </pre>
+          </div>
         ))}
     </div>
   );

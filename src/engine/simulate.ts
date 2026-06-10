@@ -17,6 +17,8 @@ import {
   getCreditCardExpense,
   getInvestmentAmount,
   getOneOffExpense,
+  getMonthlyIncome,
+  getBonusIncome,
 } from "./configLookups";
 
 import { createInitialState } from "./stateFactory";
@@ -44,8 +46,21 @@ export function simulate(
     createInitialState(config);
 
   for (const month of months) {
+    const salaryIncome =
+      getMonthlyIncome(
+        config,
+        month
+      );
+
+    const bonusIncome =
+      getBonusIncome(
+        config,
+        month
+      );
+
     const income =
-      config.income.monthly;
+      salaryIncome +
+      bonusIncome;
 
     const flatExpense =
       getMonthlyExpense(config, month);

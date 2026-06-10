@@ -65,5 +65,21 @@
       "startMonth": "2026-08",
       "durationMonths": 24
     }
+  ],
+  "salaryChanges": [
+    {
+      "id": "salary-1",
+      "effectiveMonth": "2028-01",
+      "newMonthlyIncome": 145000,
+      "description": "Expected Promotion"
+    }
+  ],
+  "bonusIncome": [
+    {
+      "id": "bonus-1",
+      "month": "2028-03",
+      "amount": 100000,
+      "description": "Annual Bonus"
+    }
   ]
 }

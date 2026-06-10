@@ -1,5 +1,9 @@
 import type { Instrument } from "./instrument";
 import type { MonthKey } from "./simulation";
+import type {
+  SalaryChange, 
+  BonusIncome,
+} from "./incomeEvents";
 
 export interface ForecastConfig {
   startMonth: MonthKey;
@@ -51,4 +55,8 @@ export interface PlannerConfig {
   creditCardBills: CreditCardBill[];
 
   instruments: Instrument[];
+
+  salaryChanges: SalaryChange[];
+
+  bonusIncome: BonusIncome[];
 }

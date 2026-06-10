@@ -39,3 +39,47 @@ export function getInvestmentAmount(
     config.investments.schedule[month] ?? 0
   );
 }
+
+export function getMonthlyIncome(
+  config: PlannerConfig,
+  month: MonthKey
+): number {
+  const applicableChanges =
+    config.salaryChanges
+      .filter(
+        (change) =>
+          change.effectiveMonth <=
+          month
+      )
+      .sort((a, b) =>
+        a.effectiveMonth.localeCompare(
+          b.effectiveMonth
+        )
+      );
+
+  if (
+    applicableChanges.length === 0
+  ) {
+    return config.income.monthly;
+  }
+
+  return applicableChanges[
+    applicableChanges.length - 1
+  ].newMonthlyIncome;
+}
+
+export function getBonusIncome(
+  config: PlannerConfig,
+  month: MonthKey
+): number {
+  return config.bonusIncome
+    .filter(
+      (bonus) =>
+        bonus.month === month
+    )
+    .reduce(
+      (sum, bonus) =>
+        sum + bonus.amount,
+      0
+    );
+}
