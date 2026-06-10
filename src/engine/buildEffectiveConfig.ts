@@ -117,5 +117,51 @@ export function buildEffectiveConfig(
     }))
   );
 
+  const bonusEvents =
+    overrides.runtimeEvents?.filter(
+      (event) =>
+        event.type ===
+        "BONUS_INCOME"
+    ) ?? [];
+
+  config.bonusIncome.push(
+    ...bonusEvents.map(
+      (bonus) => ({
+        id: bonus.id,
+
+        month: bonus.month,
+
+        amount: bonus.amount,
+
+        description:
+          bonus.description,
+      })
+    )
+  );
+
+  const salaryEvents =
+    overrides.runtimeEvents?.filter(
+      (event) =>
+        event.type ===
+        "SALARY_CHANGE"
+    ) ?? [];
+
+  config.salaryChanges.push(
+    ...salaryEvents.map(
+      (salary) => ({
+        id: salary.id,
+
+        effectiveMonth:
+          salary.effectiveMonth,
+
+        newMonthlyIncome:
+          salary.newMonthlyIncome,
+
+        description:
+          salary.description,
+      })
+    )
+  );
+
   return config;
 }

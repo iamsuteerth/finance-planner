@@ -39,6 +39,18 @@ interface PlannerStore {
     name: string
   ) => void;
 
+  addTransientBonusIncome: (
+    month: MonthKey,
+    amount: number,
+    description: string
+  ) => void;
+
+  addTransientSalaryChange: (
+    effectiveMonth: MonthKey,
+    newMonthlyIncome: number,
+    description: string
+  ) => void;
+
   setOverrides: (
     overrides: Partial<PlannerOverrides>
   ) => void;
@@ -183,6 +195,92 @@ export const usePlannerStore =
                   month,
 
                 durationMonths,
+              },
+            ],
+          };
+
+          return {
+            overrides,
+
+            config:
+              buildEffectiveConfig(
+                state.baseConfig,
+                overrides
+              ),
+          };
+        }),
+
+    addTransientBonusIncome:
+      (
+        month,
+        amount,
+        description
+      ) =>
+        set((state) => {
+          const current =
+            state.overrides
+              .runtimeEvents ?? [];
+
+          const overrides: PlannerOverrides = {
+            ...state.overrides,
+
+            runtimeEvents: [
+              ...current,
+              {
+                id:
+                  crypto.randomUUID(),
+
+                type:
+                  "BONUS_INCOME",
+
+                month,
+
+                amount,
+
+                description,
+              },
+            ],
+          };
+
+          return {
+            overrides,
+
+            config:
+              buildEffectiveConfig(
+                state.baseConfig,
+                overrides
+              ),
+          };
+        }),
+
+    addTransientSalaryChange:
+      (
+        effectiveMonth,
+        newMonthlyIncome,
+        description
+      ) =>
+        set((state) => {
+          const current =
+            state.overrides
+              .runtimeEvents ?? [];
+
+          const overrides: PlannerOverrides = {
+            ...state.overrides,
+
+            runtimeEvents: [
+              ...current,
+              {
+                id:
+                  crypto.randomUUID(),
+
+                type:
+                  "SALARY_CHANGE",
+
+                effectiveMonth,
+
+                newMonthlyIncome,
+
+                description,
               },
             ],
           };

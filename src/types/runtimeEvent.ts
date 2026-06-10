@@ -44,7 +44,33 @@ export interface RuntimeRecurringDeposit {
   durationMonths: number;
 }
 
+export interface RuntimeBonusIncome {
+  id: string;
+
+  type: "BONUS_INCOME";
+
+  month: MonthKey;
+
+  amount: number;
+
+  description: string;
+}
+
+export interface RuntimeSalaryChange {
+  id: string;
+
+  type: "SALARY_CHANGE";
+
+  effectiveMonth: MonthKey;
+
+  newMonthlyIncome: number;
+
+  description: string;
+}
+
 export type RuntimeEvent =
   | RuntimeOneOffExpense
   | RuntimeFixedDeposit
-  | RuntimeRecurringDeposit;
+  | RuntimeRecurringDeposit
+  | RuntimeBonusIncome
+  | RuntimeSalaryChange;
