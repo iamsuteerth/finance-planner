@@ -11,6 +11,7 @@ import {
 import {
   useSimulation,
 } from "../../hooks/useSimulation";
+import { formatMonth } from "../../engine/monthFormatting";
 
 export default function NetWorthChart() {
   const result =
@@ -19,7 +20,9 @@ export default function NetWorthChart() {
   const data =
     result.rows.map(
       (row) => ({
-        month: row.month,
+        month: formatMonth(
+          row.month
+        ),
 
         cash:
           Math.round(
@@ -47,46 +50,23 @@ export default function NetWorthChart() {
       shadow="xs"
       withBorder
       p="lg"
+      style={{ minWidth: 0 }}
     >
-      <Stack>
+      <Stack style={{ minWidth: 0 }}>
         <Text fw={700}>
           Wealth Projection
         </Text>
-
         <LineChart
           h={360}
+          w="100%"
           data={data}
           dataKey="month"
           withLegend
           curveType="monotone"
           series={[
-            {
-              name: "cash",
-              label: "Cash",
-              color: "blue",
-            },
-
-            {
-              name:
-                "investmentCorpus",
-
-              label:
-                "Investment Corpus",
-
-              color:
-                "green",
-            },
-
-            {
-              name:
-                "netWorth",
-
-              label:
-                "Net Worth",
-
-              color:
-                "violet",
-            },
+            { name: "cash", label: "Cash", color: "blue" },
+            { name: "investmentCorpus", label: "Investment Corpus", color: "green" },
+            { name: "netWorth", label: "Net Worth", color: "violet" },
           ]}
         />
       </Stack>
