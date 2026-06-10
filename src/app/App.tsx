@@ -6,12 +6,7 @@ import SummaryCards
 
 import NetWorthChart
   from "../components/charts/NetWorthChart";
-
-import ForecastTable
-  from "../components/forecast/ForecastTable";
-
-import EventTimeline
-  from "../components/timeline/EventTimeline";
+import DashboardTabs from "../components/dashboard/DashboardTabs";
 
 export default function App() {
   return (
@@ -20,9 +15,7 @@ export default function App() {
 
       <NetWorthChart />
 
-      <ForecastTable />
-
-      <EventTimeline />
+      <DashboardTabs />
     </PlannerShell>
   );
 }

@@ -1,8 +1,6 @@
 import {
-  Card,
   ScrollArea,
   Table,
-  Text,
 } from "@mantine/core";
 
 import {
@@ -24,7 +22,7 @@ function money(
   );
 }
 
-export default function CashflowTable() {
+export default function NetWorthTable() {
   const result =
     useSimulation();
 
@@ -33,7 +31,6 @@ export default function CashflowTable() {
       <Table
         striped
         highlightOnHover
-        verticalSpacing="sm"
       >
         <Table.Thead>
           <Table.Tr>
@@ -42,31 +39,23 @@ export default function CashflowTable() {
             </Table.Th>
 
             <Table.Th>
-              Open
+              Cash
             </Table.Th>
 
             <Table.Th>
-              Income
+              Investment
             </Table.Th>
 
             <Table.Th>
-              Expenses
+              FD
             </Table.Th>
 
             <Table.Th>
-              CC
+              RD
             </Table.Th>
 
             <Table.Th>
-              One-Off
-            </Table.Th>
-
-            <Table.Th>
-              Invest
-            </Table.Th>
-
-            <Table.Th>
-              Close
+              Net Worth
             </Table.Th>
           </Table.Tr>
         </Table.Thead>
@@ -87,48 +76,33 @@ export default function CashflowTable() {
 
                 <Table.Td>
                   {money(
-                    row.openingBalance
+                    row.assets.cash
                   )}
                 </Table.Td>
 
                 <Table.Td>
                   {money(
-                    row.cashflow
-                      .income
+                    row.assets
+                      .investmentCorpus
                   )}
                 </Table.Td>
 
                 <Table.Td>
                   {money(
-                    row.cashflow
-                      .flatExpense
+                    row.assets.fdValue
                   )}
                 </Table.Td>
 
                 <Table.Td>
                   {money(
-                    row.cashflow
-                      .creditCardExpense
+                    row.assets.rdValue
                   )}
                 </Table.Td>
 
                 <Table.Td>
                   {money(
-                    row.cashflow
-                      .oneOffExpense
-                  )}
-                </Table.Td>
-
-                <Table.Td>
-                  {money(
-                    row.cashflow
-                      .investmentAmount
-                  )}
-                </Table.Td>
-
-                <Table.Td>
-                  {money(
-                    row.closingBalance
+                    row.assets
+                      .netWorth
                   )}
                 </Table.Td>
               </Table.Tr>
