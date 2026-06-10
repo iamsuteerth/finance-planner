@@ -1,12 +1,25 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 
-import App from "./app/App";
+import ReactDOM
+  from "react-dom/client";
+
+import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
+
+import App
+  from "./app/App";
+
+import AppProviders
+  from "./app/AppProviders";
 
 ReactDOM.createRoot(
-  document.getElementById("root")!
+  document.getElementById(
+    "root"
+  )!
 ).render(
   <React.StrictMode>
-    <App />
+    <AppProviders>
+      <App />
+    </AppProviders>
   </React.StrictMode>
 );
