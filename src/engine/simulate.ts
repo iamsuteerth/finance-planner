@@ -132,8 +132,6 @@ export function simulate(
 
       rdValue,
 
-      epfoValue: 0,
-
       netWorth:
         state.cash +
         state.investmentCorpus +

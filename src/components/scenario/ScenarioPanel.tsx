@@ -12,10 +12,21 @@ import {
 
 import AddExpenseForm
   from "./AddExpenseForm";
-import AddBonusForm from "./AddBonusForm";
-import AddSalaryChangeForm from "./AddSalaryChangeForm";
-import AddFdForm from "./AddFdForm";
-import AddRdForm from "./AddRdForm";
+
+import AddBonusForm
+  from "./AddBonusForm";
+
+import AddSalaryChangeForm
+  from "./AddSalaryChangeForm";
+
+import AddFdForm
+  from "./AddFdForm";
+
+import AddRdForm
+  from "./AddRdForm";
+
+import ActiveInstruments
+  from "./ActiveInstruments";
 
 export default function ScenarioPanel() {
   const reset =
@@ -25,20 +36,20 @@ export default function ScenarioPanel() {
     );
 
   return (
-    <Stack>
-      <Text fw={700}>
-        Scenario Lab
-      </Text>
+    <Stack gap="lg">
+      <div>
+        <Text fw={700}>
+          Scenario Lab
+        </Text>
 
-      <Text
-        size="sm"
-        c="dimmed"
-      >
-        Explore financial
-        what-if scenarios.
-      </Text>
-
-      <Divider />
+        <Text
+          size="sm"
+          c="dimmed"
+        >
+          Explore financial
+          what-if scenarios.
+        </Text>
+      </div>
 
       <Tabs
         defaultValue="expense"
@@ -67,41 +78,39 @@ export default function ScenarioPanel() {
 
         <Tabs.Panel
           value="expense"
-          pt="md"
+          pt="lg"
         >
           <AddExpenseForm />
         </Tabs.Panel>
 
         <Tabs.Panel
           value="bonus"
-          pt="md"
+          pt="lg"
         >
           <AddBonusForm />
         </Tabs.Panel>
 
         <Tabs.Panel
           value="salary"
-          pt="md"
+          pt="lg"
         >
           <AddSalaryChangeForm />
         </Tabs.Panel>
 
         <Tabs.Panel
           value="fd"
-          pt="md"
+          pt="lg"
         >
           <AddFdForm />
         </Tabs.Panel>
 
         <Tabs.Panel
           value="rd"
-          pt="md"
+          pt="lg"
         >
           <AddRdForm />
         </Tabs.Panel>
       </Tabs>
-
-      <Divider />
 
       <Button
         color="red"
@@ -110,6 +119,11 @@ export default function ScenarioPanel() {
       >
         Reset Scenario
       </Button>
+      <Divider />
+      <ActiveInstruments />
+
+      <Divider />
+
     </Stack>
   );
 }

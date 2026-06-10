@@ -7,7 +7,5 @@ export interface AssetSnapshot {
 
   rdValue: number;
 
-  epfoValue: number;
-
   netWorth: number;
 }

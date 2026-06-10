@@ -19,8 +19,18 @@ export default function NetWorthChart() {
   const data =
     result.rows.map(
       (row) => ({
-        month:
-          row.month,
+        month: row.month,
+
+        cash:
+          Math.round(
+            row.assets.cash
+          ),
+
+        investmentCorpus:
+          Math.round(
+            row.assets
+              .investmentCorpus
+          ),
 
         netWorth:
           Math.round(
@@ -39,24 +49,43 @@ export default function NetWorthChart() {
       p="lg"
     >
       <Stack>
-        <Text
-          fw={700}
-        >
-          Net Worth
-          Trend
+        <Text fw={700}>
+          Wealth Projection
         </Text>
 
         <LineChart
-          h={320}
+          h={360}
           data={data}
           dataKey="month"
+          withLegend
+          curveType="monotone"
           series={[
+            {
+              name: "cash",
+              label: "Cash",
+              color: "blue",
+            },
+
+            {
+              name:
+                "investmentCorpus",
+
+              label:
+                "Investment Corpus",
+
+              color:
+                "green",
+            },
+
             {
               name:
                 "netWorth",
 
               label:
                 "Net Worth",
+
+              color:
+                "violet",
             },
           ]}
         />

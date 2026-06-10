@@ -1,108 +1,106 @@
 import {
-	AppShell,
-	Burger,
-	Group,
-	Stack,
-	Text,
-	Title,
+  AppShell,
+  Burger,
+  Group,
+  Stack,
+  Text,
+  Title,
 } from "@mantine/core";
 
 import {
-	useDisclosure,
+  useDisclosure,
 } from "@mantine/hooks";
 
 import type {
-	ReactNode,
+  ReactNode,
 } from "react";
 
 import ThemeToggle
-	from "./ThemeToggle";
-import ScenarioPanel from "../scenario/ScenarioPanel";
+  from "./ThemeToggle";
+
+import ScenarioPanel
+  from "../scenario/ScenarioPanel";
 
 interface Props {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 export default function PlannerShell({
-	children,
+  children,
 }: Props) {
-	const [
-		opened,
-		{ toggle },
-	] = useDisclosure();
+  const [
+    opened,
+    { toggle },
+  ] = useDisclosure();
 
-	return (
-		<AppShell
-			header={{
-				height: 70,
-			}}
-			navbar={{
-				width: 300,
+  return (
+    <AppShell
+      header={{
+        height: 70,
+      }}
+      navbar={{
+        width: 340,
 
-				breakpoint:
-					"sm",
+        breakpoint:
+          "sm",
 
-				collapsed: {
-					mobile:
-						!opened,
-				},
-			}}
-			padding="lg"
-		>
-			<AppShell.Header>
-				<Group
-					justify="space-between"
-					h="100%"
-					px="md"
-				>
-					<Group>
-						<Burger
-							opened={
-								opened
-							}
-							onClick={
-								toggle
-							}
-							hiddenFrom="sm"
-							size="sm"
-						/>
+        collapsed: {
+          mobile:
+            !opened,
+        },
+      }}
+      padding="lg"
+    >
+      <AppShell.Header>
+        <Group
+          justify="space-between"
+          h="100%"
+          px="md"
+        >
+          <Group>
+            <Burger
+              opened={
+                opened
+              }
+              onClick={
+                toggle
+              }
+              hiddenFrom="sm"
+              size="sm"
+            />
 
-						<Stack
-							gap={0}
-						>
-							<Title
-								order={4}
-							>
-								Finance Planner
-							</Title>
+            <Stack gap={0}>
+              <Title order={4}>
+                Finance Planner
+              </Title>
 
-							<Text
-								size="xs"
-								c="dimmed"
-							>
-								Personal Wealth
-								Forecast
-							</Text>
-						</Stack>
-					</Group>
+              <Text
+                size="xs"
+                c="dimmed"
+              >
+                Personal Wealth
+                Forecast
+              </Text>
+            </Stack>
+          </Group>
 
-					<ThemeToggle />
-				</Group>
-			</AppShell.Header>
+          <ThemeToggle />
+        </Group>
+      </AppShell.Header>
 
-			<AppShell.Navbar
-				p="lg"
-			>
-				<Stack>
-					<AppShell.Navbar p="lg">
-						<ScenarioPanel />
-					</AppShell.Navbar>
-				</Stack>
-			</AppShell.Navbar>
+      <AppShell.Navbar
+        p="lg"
+        style={{
+          overflowY: "auto",
+          overflowX: "hidden",
+        }}
+      >
+        <ScenarioPanel />
+      </AppShell.Navbar>
 
-			<AppShell.Main>
-				{children}
-			</AppShell.Main>
-		</AppShell>
-	);
+      <AppShell.Main>
+        {children}
+      </AppShell.Main>
+    </AppShell>
+  );
 }
