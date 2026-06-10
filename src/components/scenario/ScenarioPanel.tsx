@@ -2,14 +2,20 @@ import {
   Button,
   Divider,
   Stack,
+  Tabs,
   Text,
 } from "@mantine/core";
 
+import {
+  usePlannerStore,
+} from "../../store/plannerStore";
+
 import AddExpenseForm
   from "./AddExpenseForm";
-
-import { usePlannerStore }
-  from "../../store/plannerStore";
+import AddBonusForm from "./AddBonusForm";
+import AddSalaryChangeForm from "./AddSalaryChangeForm";
+import AddFdForm from "./AddFdForm";
+import AddRdForm from "./AddRdForm";
 
 export default function ScenarioPanel() {
   const reset =
@@ -28,13 +34,72 @@ export default function ScenarioPanel() {
         size="sm"
         c="dimmed"
       >
-        Explore what-if
-        financial scenarios.
+        Explore financial
+        what-if scenarios.
       </Text>
 
       <Divider />
 
-      <AddExpenseForm />
+      <Tabs
+        defaultValue="expense"
+      >
+        <Tabs.List>
+          <Tabs.Tab value="expense">
+            Expense
+          </Tabs.Tab>
+
+          <Tabs.Tab value="bonus">
+            Bonus
+          </Tabs.Tab>
+
+          <Tabs.Tab value="salary">
+            Salary
+          </Tabs.Tab>
+
+          <Tabs.Tab value="fd">
+            FD
+          </Tabs.Tab>
+
+          <Tabs.Tab value="rd">
+            RD
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel
+          value="expense"
+          pt="md"
+        >
+          <AddExpenseForm />
+        </Tabs.Panel>
+
+        <Tabs.Panel
+          value="bonus"
+          pt="md"
+        >
+          <AddBonusForm />
+        </Tabs.Panel>
+
+        <Tabs.Panel
+          value="salary"
+          pt="md"
+        >
+          <AddSalaryChangeForm />
+        </Tabs.Panel>
+
+        <Tabs.Panel
+          value="fd"
+          pt="md"
+        >
+          <AddFdForm />
+        </Tabs.Panel>
+
+        <Tabs.Panel
+          value="rd"
+          pt="md"
+        >
+          <AddRdForm />
+        </Tabs.Panel>
+      </Tabs>
 
       <Divider />
 
