@@ -3,6 +3,7 @@ import {
   Burger,
   Drawer,
   Group,
+  ScrollArea,
   Stack,
   Text,
   Title,
@@ -53,6 +54,7 @@ export default function PlannerShell({
           <Drawer
             opened={opened}
             onClose={close}
+            scrollAreaComponent={ScrollArea.Autosize}
             title={
               <div>
                 <Text fw={700}>
@@ -68,8 +70,14 @@ export default function PlannerShell({
                 </Text>
               </div>
             }
+            styles={{
+              body: {
+                paddingBottom: 40,
+              },
+            }}
             size="100%"
             hiddenFrom="sm"
+            position="left"
           >
             <ScenarioPanel />
           </Drawer>
@@ -131,7 +139,7 @@ export default function PlannerShell({
               </Stack>
             </Group>
 
-              <ThemeToggle />
+            <ThemeToggle />
           </Group>
         </AppShell.Header>
 
