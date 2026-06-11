@@ -8,10 +8,17 @@ import type { PlannerOverrides } from "../types/overrides";
 import { buildEffectiveConfig } from "../engine/buildEffectiveConfig";
 import type { MonthKey } from "../types/simulation";
 
+interface SavedScenario {
+  id: string;
+  name: string;
+  createdAt: string;
+  overrides: PlannerOverrides;
+}
 interface PlannerStore {
   baseConfig: PlannerConfig;
   overrides: PlannerOverrides;
   config: PlannerConfig;
+  savedScenarios: SavedScenario[];
 
   addTransientOneOffExpense: (
     month: MonthKey,
@@ -57,6 +64,17 @@ interface PlannerStore {
     baseConfig: PlannerConfig,
     overrides: PlannerOverrides
   ) => void;
+  saveScenario: (
+    name: string
+  ) => void;
+
+  loadScenario: (
+    id: string
+  ) => void;
+
+  deleteScenario: (
+    id: string
+  ) => void;
 }
 
 const initialConfig = configJson as PlannerConfig;
@@ -67,7 +85,7 @@ export const usePlannerStore = create<PlannerStore>()(
       baseConfig: initialConfig,
       overrides: {},
       config: initialConfig,
-
+      savedScenarios: [],
       addTransientOneOffExpense: (month, amount, label) =>
         set((state) => {
           const current = state.overrides.runtimeEvents ?? [];
@@ -274,6 +292,47 @@ export const usePlannerStore = create<PlannerStore>()(
           overrides: {},
           config: initialConfig,
         }),
+      saveScenario: (name) =>
+        set((state) => ({
+          savedScenarios: [
+            ...state.savedScenarios,
+            {
+              id: crypto.randomUUID(),
+              name,
+              createdAt:
+                new Date().toISOString(),
+              overrides:
+                state.overrides,
+            },
+          ],
+        })),
+      loadScenario: (id) =>
+        set((state) => {
+          const scenario =
+            state.savedScenarios.find(
+              (s) => s.id === id
+            );
+          if (!scenario) {
+            return {};
+          }
+          return {
+            overrides:
+              scenario.overrides,
+
+            config:
+              buildEffectiveConfig(
+                state.baseConfig,
+                scenario.overrides
+              ),
+          };
+        }),
+      deleteScenario: (id) =>
+        set((state) => ({
+          savedScenarios:
+            state.savedScenarios.filter(
+              (s) => s.id !== id
+            ),
+        })),
     }),
     {
       name:

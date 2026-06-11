@@ -29,6 +29,9 @@ import AddRdForm
 import ActiveInstruments
   from "./ActiveInstruments";
 
+import SavedScenarios
+  from "./SavedScenarios";
+
 import {
   notifications,
 } from "@mantine/notifications";
@@ -226,6 +229,10 @@ export default function ScenarioPanel() {
           Reset
         </Button>
       </Group>
+      <Divider />
+
+      <SavedScenarios />
+
       <Divider />
 
       <ActiveInstruments />
