@@ -4,8 +4,6 @@ A simple personal finance simulator for forecasting your future cash, investment
 
 Build a financial plan, test different scenarios, and see how your wealth evolves month by month.
 
----
-
 ## ✨ What You Can Do
 
 ### 📈 Forecast Your Finances
@@ -19,8 +17,6 @@ Project your future:
 * Net worth
 
 See exactly how your money changes over time with interactive charts and detailed tables.
-
----
 
 ### 🛠️ Build a Financial Plan
 
@@ -67,8 +63,6 @@ Perfect for:
 * Sharing plans
 * Versioning different financial strategies
 
----
-
 ## 📊 Dashboard
 
 The dashboard provides multiple views of your forecast:
@@ -103,8 +97,6 @@ Includes:
 * Event Timeline
 * Asset Breakdown
 
----
-
 ## 🌙 Theme Support
 
 Choose your preferred look:
@@ -113,8 +105,6 @@ Choose your preferred look:
 * Dark Mode
 
 Your preference is saved automatically.
-
----
 
 ## 📁 Project Structure
 
@@ -128,8 +118,6 @@ src
 ├── store          # Zustand stores
 └── types          # TypeScript types
 ```
-
----
 
 ## 🚀 Getting Started
 
@@ -178,8 +166,6 @@ Plans are exported using a versioned format:
 ```
 
 This allows plans to be safely restored in the future as the application evolves.
-
----
 
 ## 🧮 Supported Financial Events
 
