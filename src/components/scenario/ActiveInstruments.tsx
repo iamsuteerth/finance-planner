@@ -71,45 +71,26 @@ export default function ActiveInstruments() {
               instrument.durationMonths
             );
 
-          let principal =
-            0;
-
-          let maturityValue =
-            0;
-
-          if (
-            instrument.type ===
-            "FD"
-          ) {
-            principal =
-              instrument.principal;
-
-            maturityValue =
-              principal *
-              Math.pow(
-                1 +
-                  instrument.rate /
-                    100,
-                instrument
-                  .durationMonths /
-                  12
-              );
-          } else {
-            principal =
-              instrument.monthlyContribution *
+          const principal =
+            instrument.type === "FD"
+              ? instrument.principal
+              : instrument.monthlyContribution *
               instrument.durationMonths;
 
-            maturityValue =
-              principal *
-              Math.pow(
-                1 +
-                  instrument.rate /
-                    100,
-                instrument
+          const maturityValue =
+            principal *
+            Math.pow(
+              1 +
+              instrument.rate /
+              100,
+              instrument.type === "FD"
+                ? instrument
                   .durationMonths /
-                  24
-              );
-          }
+                12
+                : instrument
+                  .durationMonths /
+                24
+            );
 
           const interest =
             maturityValue -
@@ -138,7 +119,7 @@ export default function ActiveInstruments() {
                 <Badge
                   color={
                     instrument.type ===
-                    "FD"
+                      "FD"
                       ? "blue"
                       : "violet"
                   }

@@ -1,6 +1,4 @@
 import {
-  createContext,
-  useContext,
   type ReactNode,
 } from "react";
 
@@ -12,17 +10,10 @@ import {
   useLocalStorage,
 } from "@mantine/hooks";
 
-type ColorScheme = "light" | "dark";
-
-interface ThemeContextValue {
-  colorScheme: ColorScheme;
-  toggleTheme: () => void;
-}
-
-const ThemeContext =
-  createContext<ThemeContextValue | null>(
-    null
-  );
+import {
+  ThemeContext,
+  type ColorScheme,
+} from "./theme-context";
 
 export function AppProvider({
   children,
@@ -61,17 +52,4 @@ export function AppProvider({
       </MantineProvider>
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme() {
-  const context =
-    useContext(ThemeContext);
-
-  if (!context) {
-    throw new Error(
-      "useTheme must be used within AppProvider"
-    );
-  }
-
-  return context;
 }
