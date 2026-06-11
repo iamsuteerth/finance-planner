@@ -16,6 +16,7 @@
     }
   },
   "investments": {
+    "openingCorpus": 0,
     "schedule": {
       "2026-07": 40000
     }

@@ -22,6 +22,10 @@ import ThemeToggle
 import ScenarioPanel
   from "../scenario/ScenarioPanel";
 
+import {
+  usePlannerStore,
+} from "../../store/plannerStore";
+
 interface Props {
   children: ReactNode;
 }
@@ -36,44 +40,56 @@ export default function PlannerShell({
     false
   );
 
+  const activeView =
+    usePlannerStore(
+      (state) =>
+        state.activeView
+    );
+
   return (
     <>
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title={<div>
-          <Text fw={700}>
-            Scenario Lab
-          </Text>
+      {activeView ===
+        "forecast" && (
+          <Drawer
+            opened={opened}
+            onClose={close}
+            title={
+              <div>
+                <Text fw={700}>
+                  Scenario Lab
+                </Text>
 
-          <Text
-            size="sm"
-            c="dimmed"
+                <Text
+                  size="sm"
+                  c="dimmed"
+                >
+                  Explore financial
+                  what-if scenarios.
+                </Text>
+              </div>
+            }
+            size="100%"
+            hiddenFrom="sm"
           >
-            Explore financial
-            what-if scenarios.
-          </Text>
-        </div>}
-        size="100%"
-        hiddenFrom="sm"
-      >
-        <ScenarioPanel />
-      </Drawer>
+            <ScenarioPanel />
+          </Drawer>
+        )}
 
       <AppShell
         header={{
           height: 70,
         }}
-        navbar={{
-          width: 340,
-
-          breakpoint:
-            "sm",
-
-          collapsed: {
-            mobile: true,
-          },
-        }}
+        navbar={
+          activeView === "forecast"
+            ? {
+              width: 340,
+              breakpoint: "sm",
+              collapsed: {
+                mobile: true,
+              },
+            }
+            : undefined
+        }
         padding="lg"
       >
         <AppShell.Header>
@@ -83,12 +99,19 @@ export default function PlannerShell({
             px="md"
           >
             <Group>
-              <Burger
-                hiddenFrom="sm"
-                opened={opened}
-                onClick={open}
-                size="sm"
-              />
+              {activeView ===
+                "forecast" && (
+                  <Burger
+                    hiddenFrom="sm"
+                    opened={opened}
+                    onClick={
+                      opened
+                        ? close
+                        : open
+                    }
+                    size="sm"
+                  />
+                )}
 
               <Stack gap={0}>
                 <Title
@@ -112,18 +135,21 @@ export default function PlannerShell({
           </Group>
         </AppShell.Header>
 
-        <AppShell.Navbar
-          visibleFrom="sm"
-          p="lg"
-          style={{
-            overflowY:
-              "auto",
-            overflowX:
-              "hidden",
-          }}
-        >
-          <ScenarioPanel />
-        </AppShell.Navbar>
+        {activeView ===
+          "forecast" && (
+            <AppShell.Navbar
+              visibleFrom="sm"
+              p="lg"
+              style={{
+                overflowY:
+                  "auto",
+                overflowX:
+                  "hidden",
+              }}
+            >
+              <ScenarioPanel />
+            </AppShell.Navbar>
+          )}
 
         <AppShell.Main>
           {children}

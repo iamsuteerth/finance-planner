@@ -1,24 +1,81 @@
 import PlannerShell
   from "../components/layout/AppShell";
 
-import SummaryCards
-  from "../components/SummaryCards";
+import {
+  usePlannerStore,
+  type AppView,
+} from "../store/plannerStore";
 
-import NetWorthChart
-  from "../components/charts/NetWorthChart";
-import DashboardTabs from "../components/dashboard/DashboardTabs";
-import ScenarioBanner from "../components/scenario/ScenarioBanner";
+import ForecastPage
+  from "../pages/ForecastPage";
+
+import ConfigBuilderPage
+  from "../pages/ConfigBuilderPage";
+
+import {
+  Tabs,
+} from "@mantine/core";
+
+import {
+  IconChartLine,
+  IconSettings,
+} from "@tabler/icons-react";
 
 export default function App() {
+  const activeView =
+    usePlannerStore(
+      (state) =>
+        state.activeView
+    );
+
+  const setActiveView =
+    usePlannerStore(
+      (state) =>
+        state.setActiveView
+    );
+
   return (
     <PlannerShell>
-      <SummaryCards />
+      <Tabs
+        value={activeView}
+        onChange={(value) =>
+          setActiveView(
+            value as AppView
+          )
+        }
+        mb="lg"
+      >
+        <Tabs.List>
+          <Tabs.Tab
+            value="builder"
+            leftSection={
+              <IconSettings
+                size={14}
+              />
+            }
+          >
+            Build Plan
+          </Tabs.Tab>
 
-      <ScenarioBanner />
+          <Tabs.Tab
+            value="forecast"
+            leftSection={
+              <IconChartLine
+                size={14}
+              />
+            }
+          >
+            Forecast
+          </Tabs.Tab>
+        </Tabs.List>
+      </Tabs>
 
-      <NetWorthChart />
-
-      <DashboardTabs />
+      {activeView ===
+      "builder" ? (
+        <ConfigBuilderPage />
+      ) : (
+        <ForecastPage />
+      )}
     </PlannerShell>
   );
 }

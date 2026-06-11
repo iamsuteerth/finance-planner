@@ -8,6 +8,10 @@ import type { PlannerOverrides } from "../types/overrides";
 import { buildEffectiveConfig } from "../engine/buildEffectiveConfig";
 import type { MonthKey } from "../types/simulation";
 
+export type AppView =
+  | "builder"
+  | "forecast";
+
 interface SavedScenario {
   id: string;
   name: string;
@@ -19,6 +23,11 @@ interface PlannerStore {
   overrides: PlannerOverrides;
   config: PlannerConfig;
   savedScenarios: SavedScenario[];
+  activeView: AppView;
+
+  setActiveView: (
+    view: AppView
+  ) => void;
 
   addTransientOneOffExpense: (
     month: MonthKey,
@@ -86,6 +95,13 @@ export const usePlannerStore = create<PlannerStore>()(
       overrides: {},
       config: initialConfig,
       savedScenarios: [],
+      activeView: "builder",
+      setActiveView: (
+        activeView
+      ) =>
+        set({
+          activeView,
+        }),
       addTransientOneOffExpense: (month, amount, label) =>
         set((state) => {
           const current = state.overrides.runtimeEvents ?? [];
@@ -302,7 +318,9 @@ export const usePlannerStore = create<PlannerStore>()(
               createdAt:
                 new Date().toISOString(),
               overrides:
-                state.overrides,
+                structuredClone(
+                  state.overrides
+                ),
             },
           ],
         })),
@@ -345,6 +363,12 @@ export const usePlannerStore = create<PlannerStore>()(
 
           overrides:
             state.overrides,
+
+          savedScenarios:
+            state.savedScenarios,
+
+          activeView:
+            state.activeView,
         }),
 
       merge: (
