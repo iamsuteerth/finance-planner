@@ -118,7 +118,7 @@ export default function PlannerShell({
                   order={4}
                   fw={700}
                 >
-                  Finance Planner
+                  Worth Flow
                 </Title>
 
                 <Text
