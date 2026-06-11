@@ -1,5 +1,4 @@
-# 💰 Finance Planner
-
+# 💰 Finance Planner (aka Wealth Pilot)
 A simple personal finance simulator for forecasting your future cash, investments, deposits, and net worth.
 
 Build a financial plan, test different scenarios, and see how your wealth evolves month by month.
