@@ -4,13 +4,13 @@
     "totalMonths": 36
   },
   "income": {
-    "monthly": 114400
+    "monthly": 100000
   },
   "cash": {
-    "openingBalance": 294400
+    "openingBalance": 300000
   },
   "expenses": {
-    "defaultMonthly": 35000,
+    "defaultMonthly": 40000,
     "overrides": {
       "2026-07": 29000
     }
@@ -18,7 +18,7 @@
   "investments": {
     "openingCorpus": 0,
     "schedule": {
-      "2026-07": 40000
+      "2026-07": 25000
     }
   },
   "creditCardBills": [
