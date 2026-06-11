@@ -13,6 +13,27 @@ export interface InvestmentRange {
   amount: number;
 }
 
+export interface BuilderOneOffExpense {
+  id: string;
+  month: MonthKey;
+  label: string;
+  amount: number;
+}
+
+export interface BuilderSalaryChange {
+  id: string;
+  effectiveMonth: MonthKey;
+  newMonthlyIncome: number;
+  description: string;
+}
+
+export interface BuilderBonusIncome {
+  id: string;
+  month: MonthKey;
+  amount: number;
+  description: string;
+}
+
 export interface BuilderState {
   startMonth: MonthKey;
   totalMonths: number;
@@ -31,23 +52,14 @@ export interface BuilderState {
     amount: number;
   }[];
 
-  oneOffExpenses: {
-    month: MonthKey;
-    label: string;
-    amount: number;
-  }[];
+  oneOffExpenses:
+  BuilderOneOffExpense[];
 
-  salaryChanges: {
-    effectiveMonth: MonthKey;
-    newMonthlyIncome: number;
-    description: string;
-  }[];
+  salaryChanges:
+  BuilderSalaryChange[];
 
-  bonusIncome: {
-    month: MonthKey;
-    amount: number;
-    description: string;
-  }[];
+  bonusIncome:
+  BuilderBonusIncome[];
 
   instruments: (
     | FixedDeposit

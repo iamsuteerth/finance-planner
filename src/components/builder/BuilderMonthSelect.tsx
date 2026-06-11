@@ -51,6 +51,8 @@ function buildMonths(): {
   );
 }
 
+const MONTH_OPTIONS = buildMonths();
+
 export default function BuilderMonthSelect({
   value,
   onChange,
@@ -59,7 +61,7 @@ export default function BuilderMonthSelect({
   return (
     <Select
       label={label}
-      data={buildMonths()}
+      data={MONTH_OPTIONS}
       value={value}
       onChange={onChange}
       searchable

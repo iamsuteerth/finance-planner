@@ -49,6 +49,24 @@ export default function BaselineStep() {
       />
 
       <NumberInput
+        label="Monthly Expense"
+        required
+        min={0}
+        thousandSeparator=","
+        value={
+          state.defaultMonthlyExpense
+        }
+        onChange={(value) =>
+          setBaseline(
+            state.monthlyIncome,
+            state.openingCash,
+            state.openingInvestmentCorpus,
+            Number(value)
+          )
+        }
+      />
+
+      <NumberInput
         label="Opening Cash Balance"
         required
         min={0}
@@ -80,24 +98,6 @@ export default function BaselineStep() {
             state.openingCash,
             Number(value),
             state.defaultMonthlyExpense
-          )
-        }
-      />
-
-      <NumberInput
-        label="Default Monthly Expense"
-        required
-        min={0}
-        thousandSeparator=","
-        value={
-          state.defaultMonthlyExpense
-        }
-        onChange={(value) =>
-          setBaseline(
-            state.monthlyIncome,
-            state.openingCash,
-            state.openingInvestmentCorpus,
-            Number(value)
           )
         }
       />

@@ -47,12 +47,12 @@ export function builderToConfig(
 
       date.setMonth(
         date.getMonth() +
-          1
+        1
       );
 
       current = `${date.getFullYear()}-${String(
         date.getMonth() +
-          1
+        1
       ).padStart(
         2,
         "0"
@@ -104,57 +104,15 @@ export function builderToConfig(
       ),
 
     oneOffExpenses:
-      state.oneOffExpenses.map(
-        (
-          expense,
-          index
-        ) => ({
-          id:
-            crypto.randomUUID() ??
-            `expense-${index}`,
-
-          ...expense,
-        })
-      ),
+      state.oneOffExpenses,
 
     salaryChanges:
-      state.salaryChanges.map(
-        (
-          change,
-          index
-        ) => ({
-          id:
-            crypto.randomUUID() ??
-            `salary-${index}`,
-
-          ...change,
-        })
-      ),
+      state.salaryChanges,
 
     bonusIncome:
-      state.bonusIncome.map(
-        (
-          bonus,
-          index
-        ) => ({
-          id:
-            crypto.randomUUID() ??
-            `bonus-${index}`,
-
-          ...bonus,
-        })
-      ),
+      state.bonusIncome,
 
     instruments:
-      state.instruments.map(
-        (
-          instrument
-        ) => ({
-          ...instrument,
-
-          id:
-            crypto.randomUUID(),
-        })
-      ),
+      state.instruments,
   };
 }

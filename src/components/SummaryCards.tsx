@@ -145,7 +145,6 @@ export default function SummaryCards() {
             />
           }
         />
-        
       </Grid.Col>
 
       <Grid.Col

@@ -1,248 +1,173 @@
-# Finance Planner
+# 💰 Finance Planner
 
-A personal finance forecasting tool built with React, TypeScript, Mantine, and Zustand.
+A simple personal finance simulator for forecasting your future cash, investments, deposits, and net worth.
 
-The planner projects:
+Build a financial plan, test different scenarios, and see how your wealth evolves month by month.
+
+---
+
+## ✨ What You Can Do
+
+### 📈 Forecast Your Finances
+
+Project your future:
 
 * Cash balance
-* Investments
+* Investment corpus
 * Fixed Deposits (FD)
 * Recurring Deposits (RD)
 * Net worth
 
-It also supports scenario planning through temporary expenses, bonus income, salary changes, and new investment instruments.
+See exactly how your money changes over time with interactive charts and detailed tables.
 
 ---
 
-## Features
+### 🛠️ Build a Financial Plan
 
-### Forecasting
+Use the guided planner to create a forecast in minutes.
 
-Generate monthly projections for:
+Configure:
 
-* Cash balance
-* Investment corpus
-* FD value
-* RD value
-* Net worth
+* Forecast duration
+* Monthly income
+* Monthly expenses
+* Starting cash balance
+* Existing investments
+* Investment schedules
+* One-time events
+* Deposits and instruments
 
----
-
-### Scenario Lab
-
-Create temporary scenarios without modifying the base plan.
-
-Supported scenarios:
-
-* One-off expense
-* Bonus income
-* Salary change
-* Fixed deposit
-* Recurring deposit
+No JSON editing required.
 
 ---
 
-### Saved Scenarios
+### 🎯 Scenario Planning
 
-Save and reload frequently used scenario setups.
+Want to know what happens if you:
+
+* Receive a bonus?
+* Get a salary hike?
+* Make a large purchase?
+* Start a new FD?
+* Open an RD?
+
+Create scenarios instantly and compare outcomes without changing your original plan.
 
 ---
 
-### Import / Export
+### 💾 Save & Restore Plans
 
-Export the complete planner state to JSON.
+Export your plan as a JSON file.
 
-Import previously exported plans to restore a planner instantly.
+Import it later to continue exactly where you left off.
+
+Perfect for:
+
+* Backups
+* Sharing plans
+* Versioning different financial strategies
 
 ---
 
-### Dashboard
+## 📊 Dashboard
+
+The dashboard provides multiple views of your forecast:
+
+### Summary
+
+Quick overview of:
+
+* Net Worth
+* Cash
+* Investments
+* Active Instruments
+
+### Wealth Projection
+
+Interactive chart showing:
+
+* Cash
+* Investments
+* Total Net Worth
+
+with month-by-month change tracking.
+
+### Detailed Analysis
 
 Includes:
 
-* Summary cards
-* Wealth projection chart
-* Asset breakdown chart
-* Forecast table
-* Net worth table
-* Cashflow table
-* Instruments table
-* Event timeline
+* Forecast Table
+* Cashflow Table
+* Net Worth Table
+* Instruments Table
+* Event Timeline
+* Asset Breakdown
 
 ---
 
-### Theme Support
+## 🌙 Theme Support
 
-* Light mode
-* Dark mode
+Choose your preferred look:
 
-Theme preference is saved automatically.
+* Light Mode
+* Dark Mode
+
+Your preference is saved automatically.
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 src
-├── app
-├── components
-├── data
-├── engine
-├── hooks
-├── store
-└── types
-```
-
-### app
-
-Application setup and theme management.
-
-### components
-
-UI components grouped by feature.
-
-### data
-
-Default planner configuration.
-
-### engine
-
-Simulation and calculation logic.
-
-### hooks
-
-Reusable React hooks.
-
-### store
-
-Zustand state management.
-
-### types
-
-Shared TypeScript types.
-
----
-
-## Configuration
-
-The planner starts from `data/config.json`.
-
-Example:
-
-```json
-{
-  "forecast": {
-    "startMonth": "2026-07",
-    "totalMonths": 36
-  },
-
-  "income": {
-    "monthly": 114400
-  },
-
-  "cash": {
-    "openingBalance": 294400
-  },
-
-  "investments": {
-    "openingCorpus": 800000,
-
-    "schedule": {
-      "2026-07": 40000
-    }
-  }
-}
+├── app            # Application setup
+├── components     # UI components
+├── data           # Default configuration
+├── engine         # Forecast simulation engine
+├── hooks          # Shared hooks
+├── store          # Zustand stores
+└── types          # TypeScript types
 ```
 
 ---
 
-## Sample Configuration
+## 🚀 Getting Started
 
-```json
-{
-  "forecast": {
-    "startMonth": "2026-07",
-    "totalMonths": 36
-  },
+Install dependencies:
 
-  "income": {
-    "monthly": 114400
-  },
+```bash
+npm install
+```
 
-  "cash": {
-    "openingBalance": 294400
-  },
+Start the development server:
 
-  "expenses": {
-    "defaultMonthly": 35000,
-    "overrides": {
-      "2026-07": 29000
-    }
-  },
+```bash
+npm run dev
+```
 
-  "investments": {
-    "openingCorpus": 800000,
+Build for production:
 
-    "schedule": {
-      "2026-07": 40000,
-      "2027-01": 45000,
-      "2027-07": 50000
-    }
-  },
+```bash
+npm run build
+```
 
-  "creditCardBills": [
-    {
-      "month": "2026-07",
-      "amount": 30040
-    }
-  ],
+Preview the production build:
 
-  "oneOffExpenses": [
-    {
-      "id": "expense-1",
-      "month": "2026-09",
-      "label": "Vacation",
-      "amount": 43000
-    }
-  ],
+```bash
+npm run preview
+```
 
-  "instruments": [
-    {
-      "id": "fd-1",
-      "type": "FD",
-      "name": "SBI FD",
-      "principal": 100000,
-      "rate": 7.2,
-      "startMonth": "2026-08",
-      "durationMonths": 12
-    }
-  ],
+Run linting:
 
-  "salaryChanges": [
-    {
-      "id": "salary-1",
-      "effectiveMonth": "2028-01",
-      "newMonthlyIncome": 145000,
-      "description": "Promotion"
-    }
-  ],
-
-  "bonusIncome": [
-    {
-      "id": "bonus-1",
-      "month": "2028-03",
-      "amount": 100000,
-      "description": "Annual Bonus"
-    }
-  ]
-}
+```bash
+npm run lint
 ```
 
 ---
 
-## Export Format
+## 📦 Export Format
 
-Exports contain:
+Plans are exported using a versioned format:
 
 ```json
 {
@@ -252,45 +177,38 @@ Exports contain:
 }
 ```
 
-The exported file can be imported later to restore the planner state.
+This allows plans to be safely restored in the future as the application evolves.
 
 ---
 
-## Development
+## 🧮 Supported Financial Events
 
-Install dependencies:
+### Income
 
-```bash
-npm install
-```
+* Monthly salary
+* Salary changes
+* Bonus income
 
-Start development server:
+### Expenses
 
-```bash
-npm run dev
-```
+* Monthly expenses
+* One-off expenses
+* Credit card payments
 
-Run linting:
+### Investments
 
-```bash
-npm run lint
-```
+* Investment schedules
+* Investment pauses
+* Investment increases
 
-Create production build:
+### Instruments
 
-```bash
-npm run build
-```
-
-Preview production build:
-
-```bash
-npm run preview
-```
+* Fixed Deposits (FD)
+* Recurring Deposits (RD)
 
 ---
 
-## Built With
+## 🛠️ Built With
 
 * React
 * TypeScript

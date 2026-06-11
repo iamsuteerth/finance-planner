@@ -3,11 +3,19 @@ import { create } from "zustand";
 import type {
   BuilderState,
   InvestmentRange,
+  BuilderBonusIncome,
+  BuilderOneOffExpense,
+  BuilderSalaryChange,
 } from "../types/builder";
 
 import type {
   MonthKey,
 } from "../types/simulation";
+
+import type {
+  FixedDeposit,
+  RecurringDeposit,
+} from "../types/instrument";
 
 const initialState: BuilderState = {
   startMonth:
@@ -70,6 +78,40 @@ interface BuilderStore {
 
   removeInvestmentRange: (
     index: number
+  ) => void;
+
+  addOneOffExpense: (
+    expense: BuilderOneOffExpense
+  ) => void;
+
+  removeOneOffExpense: (
+    id: string
+  ) => void;
+
+  addBonusIncome: (
+    bonus: BuilderBonusIncome
+  ) => void;
+
+  removeBonusIncome: (
+    id: string
+  ) => void;
+
+  addSalaryChange: (
+    change: BuilderSalaryChange
+  ) => void;
+
+  removeSalaryChange: (
+    id: string
+  ) => void;
+
+  addInstrument: (
+    instrument:
+      | FixedDeposit
+      | RecurringDeposit
+  ) => void;
+
+  removeInstrument: (
+    id: string
   ) => void;
 
   setState: (
@@ -187,6 +229,186 @@ export const useBuilderStore =
                     ) =>
                       i !==
                       index
+                  ),
+              },
+            })
+          ),
+
+      addOneOffExpense:
+        (
+          expense
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                oneOffExpenses:
+                  [
+                    ...store
+                      .state
+                      .oneOffExpenses,
+
+                    expense,
+                  ],
+              },
+            })
+          ),
+
+      removeOneOffExpense:
+        (
+          id
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                oneOffExpenses:
+                  store.state.oneOffExpenses.filter(
+                    (
+                      expense
+                    ) =>
+                      expense.id !==
+                      id
+                  ),
+              },
+            })
+          ),
+
+      addBonusIncome:
+        (
+          bonus
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                bonusIncome:
+                  [
+                    ...store
+                      .state
+                      .bonusIncome,
+
+                    bonus,
+                  ],
+              },
+            })
+          ),
+
+      removeBonusIncome:
+        (
+          id
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                bonusIncome:
+                  store.state.bonusIncome.filter(
+                    (
+                      bonus
+                    ) =>
+                      bonus.id !==
+                      id
+                  ),
+              },
+            })
+          ),
+
+      addSalaryChange:
+        (
+          change
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                salaryChanges:
+                  [
+                    ...store
+                      .state
+                      .salaryChanges,
+
+                    change,
+                  ],
+              },
+            })
+          ),
+
+      removeSalaryChange:
+        (
+          id
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                salaryChanges:
+                  store.state.salaryChanges.filter(
+                    (
+                      change
+                    ) =>
+                      change.id !==
+                      id
+                  ),
+              },
+            })
+          ),
+
+      addInstrument:
+        (
+          instrument
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                instruments: [
+                  ...store.state.instruments,
+                  instrument,
+                ],
+              },
+            })
+          ),
+
+      removeInstrument:
+        (
+          id
+        ) =>
+          set(
+            (
+              store
+            ) => ({
+              state: {
+                ...store.state,
+
+                instruments:
+                  store.state.instruments.filter(
+                    (
+                      instrument
+                    ) =>
+                      instrument.id !==
+                      id
                   ),
               },
             })
