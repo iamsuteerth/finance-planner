@@ -9,7 +9,9 @@ export function createInitialState(
     cash:
       config.cash.openingBalance,
 
-    investmentCorpus: 0,
+    investmentCorpus:
+      config.investments
+        .openingCorpus,
 
     fds: [],
 

@@ -1,7 +1,7 @@
 import type { Instrument } from "./instrument";
 import type { MonthKey } from "./simulation";
 import type {
-  SalaryChange, 
+  SalaryChange,
   BonusIncome,
 } from "./incomeEvents";
 
@@ -24,6 +24,7 @@ export interface ExpenseConfig {
 }
 
 export interface InvestmentConfig {
+  openingCorpus: number;
   schedule: Record<string, number>;
 }
 
