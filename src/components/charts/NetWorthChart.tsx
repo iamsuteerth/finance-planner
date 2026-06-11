@@ -19,29 +19,103 @@ export default function NetWorthChart() {
 
   const data =
     result.rows.map(
-      (row) => ({
-        month: formatMonth(
-          row.month
-        ),
+      (row, index) => {
+        const previous =
+          index > 0
+            ? result.rows[
+            index - 1
+            ]
+            : null;
 
-        cash:
+        const cash =
           Math.round(
             row.assets.cash
-          ),
+          );
 
-        investmentCorpus:
+        const investmentCorpus =
           Math.round(
             row.assets
               .investmentCorpus
-          ),
+          );
 
-        netWorth:
+        const netWorth =
           Math.round(
             row.assets
               .netWorth
-          ),
-      })
+          );
+
+        return {
+          month:
+            formatMonth(
+              row.month
+            ),
+
+          cash,
+
+          investmentCorpus,
+
+          netWorth,
+
+          cashDelta:
+            previous
+              ? cash -
+              Math.round(
+                previous
+                  .assets
+                  .cash
+              )
+              : 0,
+
+          investmentDelta:
+            previous
+              ? investmentCorpus -
+              Math.round(
+                previous
+                  .assets
+                  .investmentCorpus
+              )
+              : 0,
+
+          netWorthDelta:
+            previous
+              ? netWorth -
+              Math.round(
+                previous
+                  .assets
+                  .netWorth
+              )
+              : 0,
+
+          isStartingPoint:
+            index === 0,
+        };
+      }
     );
+
+  function formatDelta(
+    value: number
+  ) {
+    const sign =
+      value >= 0
+        ? "+"
+        : "";
+
+    return `${sign}₹${value.toLocaleString()}`;
+  }
+
+  function deltaColor(
+    value: number
+  ) {
+    if (value > 0) {
+      return "green";
+    }
+
+    if (value < 0) {
+      return "red";
+    }
+
+    return "orange";
+  }
 
   return (
     <Card
@@ -93,6 +167,130 @@ export default function NetWorthChart() {
               color: "violet",
             },
           ]}
+          tooltipProps={{
+            content: ({
+              label,
+              payload,
+            }) => {
+              if (
+                !payload?.length
+              ) {
+                return null;
+              }
+
+              const point =
+                payload[0]
+                  .payload;
+
+              return (
+                <Card
+                  shadow="sm"
+                  p="sm"
+                >
+                  <Stack gap={4}>
+                    <Text fw={700}>
+                      {label}
+                    </Text>
+
+                    {point.isStartingPoint && (
+                      <>
+                        <Text size="sm">
+                          Cash:
+                          {" "}
+                          ₹
+                          {point.cash.toLocaleString()}
+                        </Text>
+
+                        <Text size="sm">
+                          Investments:
+                          {" "}
+                          ₹
+                          {point.investmentCorpus.toLocaleString()}
+                        </Text>
+
+                        <Text size="sm">
+                          Net Worth:
+                          {" "}
+                          ₹
+                          {point.netWorth.toLocaleString()}
+                        </Text>
+                      </>
+                    )}
+
+                    {!point.isStartingPoint && (
+                      <>
+                        <Text size="sm">
+                          Cash:
+                          {" "}
+                          ₹
+                          {point.cash.toLocaleString()}
+                          {" ("}
+
+                          <Text
+                            span
+                            c={deltaColor(
+                              point.cashDelta
+                            )}
+                            fw={600}
+                          >
+                            {formatDelta(
+                              point.cashDelta
+                            )}
+                          </Text>
+
+                          {")"}
+                        </Text>
+
+                        <Text size="sm">
+                          Investments:
+                          {" "}
+                          ₹
+                          {point.investmentCorpus.toLocaleString()}
+                          {" ("}
+
+                          <Text
+                            span
+                            c={deltaColor(
+                              point.investmentDelta
+                            )}
+                            fw={600}
+                          >
+                            {formatDelta(
+                              point.investmentDelta
+                            )}
+                          </Text>
+
+                          {")"}
+                        </Text>
+
+                        <Text size="sm">
+                          Net Worth:
+                          {" "}
+                          ₹
+                          {point.netWorth.toLocaleString()}
+                          {" ("}
+
+                          <Text
+                            span
+                            c={deltaColor(
+                              point.netWorthDelta
+                            )}
+                            fw={600}
+                          >
+                            {formatDelta(
+                              point.netWorthDelta
+                            )}
+                          </Text>
+
+                          {")"}
+                        </Text>
+                      </>
+                    )}
+                  </Stack>
+                </Card>
+              );
+            },
+          }}
         />
       </Stack>
     </Card>
