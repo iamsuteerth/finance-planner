@@ -1,7 +1,10 @@
 import {
   Button,
   Group,
+  Text,
+  Progress,
   Stepper,
+  Box,
 } from "@mantine/core";
 
 import {
@@ -25,6 +28,7 @@ import InstrumentsStep
 
 import ReviewStep
   from "./ReviewStep";
+import { useBuilderStore } from "../../store/builderStore";
 
 export default function BuilderWizard() {
   const [
@@ -32,15 +36,20 @@ export default function BuilderWizard() {
     setActive,
   ] = useState(0);
 
-  const nextStep =
-    () =>
-      setActive(
-        (current) =>
-          Math.min(
-            current + 1,
-            5
-          )
-      );
+  const builderState =
+    useBuilderStore(
+      (store) =>
+        store.state
+    );
+
+  const nextStep = () =>
+    setActive(
+      (current) =>
+        Math.min(
+          current + 1,
+          5
+        )
+    );
 
   const prevStep =
     () =>
@@ -52,6 +61,44 @@ export default function BuilderWizard() {
           )
       );
 
+  const isCurrentStepValid =
+    (() => {
+      switch (active) {
+        case 0:
+          return (
+            !!builderState.startMonth &&
+            builderState.totalMonths >= 12 &&
+            builderState.totalMonths <= 48
+          );
+
+        case 1:
+          return (
+            builderState.monthlyIncome >= 10000 &&
+            builderState.defaultMonthlyExpense >= 0 &&
+            builderState.openingCash >= 0 &&
+            builderState.openingInvestmentCorpus >= 0
+          );
+
+        case 2:
+          return (
+            builderState.investmentRanges
+              .length > 0
+          );
+
+        case 3:
+          return true;
+
+        case 4:
+          return true;
+
+        case 5:
+          return true;
+
+        default:
+          return false;
+      }
+    })();
+
   return (
     <>
       <Stepper
@@ -59,6 +106,7 @@ export default function BuilderWizard() {
         allowNextStepsSelect={
           false
         }
+        visibleFrom="md"
       >
         <Stepper.Step
           label="Forecast"
@@ -103,6 +151,50 @@ export default function BuilderWizard() {
         </Stepper.Step>
       </Stepper>
 
+      <Box hiddenFrom="md">
+        <Text
+          ta="center"
+          fw={600}
+          mb="xs"
+        >
+          Step {active + 1} of 6
+        </Text>
+
+        <Progress
+          value={
+            ((active + 1) / 6) *
+            100
+          }
+          size="lg"
+          radius="xl"
+          mb="lg"
+        />
+
+        {active === 0 && (
+          <ForecastStep />
+        )}
+
+        {active === 1 && (
+          <BaselineStep />
+        )}
+
+        {active === 2 && (
+          <InvestmentsStep />
+        )}
+
+        {active === 3 && (
+          <EventsStep />
+        )}
+
+        {active === 4 && (
+          <InstrumentsStep />
+        )}
+
+        {active === 5 && (
+          <ReviewStep />
+        )}
+      </Box>
+
       <Group
         justify="center"
         gap="xl"
@@ -125,7 +217,8 @@ export default function BuilderWizard() {
             nextStep
           }
           disabled={
-            active === 5
+            active === 5 ||
+            !isCurrentStepValid
           }
         >
           Next

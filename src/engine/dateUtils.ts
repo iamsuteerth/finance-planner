@@ -87,3 +87,33 @@ export function addMonths(
     "0"
   )}` as MonthKey;
 }
+
+export function nextMonth(
+  month: string
+) {
+  const [
+    year,
+    monthNumber,
+  ] =
+    month
+      .split("-")
+      .map(Number);
+
+  const date =
+    new Date(
+      year,
+      monthNumber - 1,
+      1
+    );
+
+  date.setMonth(
+    date.getMonth() + 1
+  );
+
+  return `${date.getFullYear()}-${String(
+    date.getMonth() + 1
+  ).padStart(
+    2,
+    "0"
+  )}`;
+}

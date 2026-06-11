@@ -11,7 +11,9 @@ import type {
 
 const initialState: BuilderState = {
   startMonth:
-    "2026-01",
+    new Date()
+      .toISOString()
+      .slice(0, 7) as MonthKey,
 
   totalMonths:
     36,
@@ -126,27 +128,45 @@ export const useBuilderStore =
         ),
 
       addInvestmentRange:
-        (
-          range
-        ) =>
-          set(
-            (
-              store
-            ) => ({
+        (range) =>
+          set((store) => {
+            const existing =
+              store.state
+                .investmentRanges;
+
+            if (
+              range.startMonth >
+              range.endMonth
+            ) {
+              return store;
+            }
+
+            const overlap =
+              existing.some(
+                (current) =>
+                  !(
+                    range.endMonth <
+                    current.startMonth ||
+                    range.startMonth >
+                    current.endMonth
+                  )
+              );
+
+            if (overlap) {
+              return store;
+            }
+
+            return {
               state: {
                 ...store.state,
 
-                investmentRanges:
-                  [
-                    ...store
-                      .state
-                      .investmentRanges,
-
-                    range,
-                  ],
+                investmentRanges: [
+                  ...existing,
+                  range,
+                ],
               },
-            })
-          ),
+            };
+          }),
 
       removeInvestmentRange:
         (

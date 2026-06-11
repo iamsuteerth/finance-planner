@@ -43,6 +43,7 @@ export default function MonthSelect({
 
   return (
     <Select
+    defaultValue={value}
       label={label}
       data={months}
       value={value}
