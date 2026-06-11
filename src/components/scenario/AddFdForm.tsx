@@ -20,6 +20,7 @@ import {
 import InstrumentPreview from "./InstrumentPreview";
 import { addMonths } from "../../engine/dateUtils";
 import { formatMonth } from "../../engine/monthFormatting";
+import { money } from "./moneyFormat";
 
 export default function AddFdForm() {
   const addFd =
@@ -143,15 +144,18 @@ export default function AddFdForm() {
       <InstrumentPreview
         title="Fixed Deposit Forecast"
         subtitle={`₹${principal.toLocaleString()} @ ${rate}%`}
-        maturityValue={`₹${Math.round(
+        maturityValue={money(
           maturityValue
-        ).toLocaleString()}`}
-        interest={`₹${Math.round(
+        )}
+
+        interest={money(
           interest
-        ).toLocaleString()}`}
+        )}
         maturityMonth={formatMonth(
           maturityMonth!
         )}
+        principal={money(principal)}
+        type="FD"
       />
 
       <Button

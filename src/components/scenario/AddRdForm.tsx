@@ -20,6 +20,7 @@ import {
 import InstrumentPreview from "./InstrumentPreview";
 import { formatMonth } from "../../engine/monthFormatting";
 import { addMonths } from "../../engine/dateUtils";
+import { money } from "./moneyFormat";
 
 export default function AddRdForm() {
   const addRd =
@@ -148,16 +149,21 @@ export default function AddRdForm() {
 
       <InstrumentPreview
         title="Recurring Deposit Forecast"
-        subtitle={`₹${monthlyContribution.toLocaleString()}/month`}
-        maturityValue={`₹${Math.round(
+        subtitle={`${money(monthlyContribution)}/month`}
+        maturityValue={money(
           maturityValue
-        ).toLocaleString()}`}
-        interest={`₹${Math.round(
+        )}
+        interest={money(
           interest
-        ).toLocaleString()}`}
+        )}
         maturityMonth={formatMonth(
           maturityMonth!
         )}
+        principal={money(
+          monthlyContribution *
+          durationMonths
+        )}
+        type="RD"
       />
 
       <Button

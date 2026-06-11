@@ -15,6 +15,8 @@ import {
 interface Props {
   title: string;
 
+  principal: string;
+
   maturityValue: string;
 
   interest: string;
@@ -22,14 +24,18 @@ interface Props {
   maturityMonth: string;
 
   subtitle?: string;
+
+  type?: "FD" | "RD";
 }
 
 export default function InstrumentPreview({
   title,
+  principal,
   maturityValue,
   interest,
   maturityMonth,
   subtitle,
+  type,
 }: Props) {
   return (
     <Card
@@ -38,13 +44,9 @@ export default function InstrumentPreview({
       bg="var(--mantine-color-body)"
     >
       <Stack gap="md">
-        <Group
-          justify="space-between"
-        >
-          <Stack gap={0}>
-            <Text
-              fw={700}
-            >
+        <Group justify="space-between">
+          <Stack gap={4}>
+            <Text fw={700}>
               {title}
             </Text>
 
@@ -56,12 +58,31 @@ export default function InstrumentPreview({
                 {subtitle}
               </Text>
             )}
+
+            {type && (
+              <Badge
+                variant="light"
+                color={
+                  type === "FD"
+                    ? "cyan"
+                    : "grape"
+                }
+                w="fit-content"
+              >
+                {type}
+              </Badge>
+            )}
           </Stack>
 
           <ThemeIcon
             size="lg"
             radius="xl"
             variant="light"
+            color={
+              type === "FD"
+                ? "cyan"
+                : "grape"
+            }
           >
             <IconTrendingUp
               size={18}
@@ -70,6 +91,19 @@ export default function InstrumentPreview({
         </Group>
 
         <SimpleGrid cols={2}>
+          <div>
+            <Text
+              size="xs"
+              c="dimmed"
+            >
+              Invested
+            </Text>
+
+            <Text fw={700}>
+              {principal}
+            </Text>
+          </div>
+
           <div>
             <Text
               size="xs"
@@ -88,21 +122,30 @@ export default function InstrumentPreview({
               size="xs"
               c="dimmed"
             >
-              Interest Earned
+              Profit
             </Text>
 
-            <Text fw={700}>
+            <Text
+              fw={700}
+              c="green"
+            >
               {interest}
             </Text>
           </div>
-        </SimpleGrid>
 
-        <Badge
-          variant="light"
-          size="lg"
-        >
-          Matures {maturityMonth}
-        </Badge>
+          <div>
+            <Text
+              size="xs"
+              c="dimmed"
+            >
+              Maturity
+            </Text>
+
+            <Text fw={700}>
+              {maturityMonth}
+            </Text>
+          </div>
+        </SimpleGrid>
       </Stack>
     </Card>
   );

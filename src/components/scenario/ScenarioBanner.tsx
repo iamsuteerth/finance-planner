@@ -22,13 +22,35 @@ export default function ScenarioBanner() {
     return null;
   }
 
-  const types =
-    new Set(
-      events.map(
-        (event) =>
-          event.type
-      )
-    );
+  const counts = {
+    expense: events.filter(
+      (event) =>
+        event.type ===
+        "ONE_OFF_EXPENSE"
+    ).length,
+
+    bonus: events.filter(
+      (event) =>
+        event.type ===
+        "BONUS_INCOME"
+    ).length,
+
+    salary: events.filter(
+      (event) =>
+        event.type ===
+        "SALARY_CHANGE"
+    ).length,
+
+    fd: events.filter(
+      (event) =>
+        event.type === "FD"
+    ).length,
+
+    rd: events.filter(
+      (event) =>
+        event.type === "RD"
+    ).length,
+  };
 
   return (
     <Paper
@@ -62,60 +84,56 @@ export default function ScenarioBanner() {
         </div>
 
         <Group gap={6}>
-          {types.has(
-            "ONE_OFF_EXPENSE"
-          ) && (
-              <Badge
-                color="red"
-                variant="light"
-              >
-                Expense
-              </Badge>
-            )}
+          {counts.expense > 0 && (
+            <Badge
+              color="red"
+              variant="light"
+            >
+              Expense ×
+              {" "}
+              {counts.expense}
+            </Badge>
+          )}
 
-          {types.has(
-            "BONUS_INCOME"
-          ) && (
-              <Badge
-                color="green"
-                variant="light"
-              >
-                Bonus
-              </Badge>
-            )}
+          {counts.bonus > 0 && (
+            <Badge
+              color="green"
+              variant="light"
+            >
+              Bonus ×
+              {" "}
+              {counts.bonus}
+            </Badge>
+          )}
 
-          {types.has(
-            "SALARY_CHANGE"
-          ) && (
-              <Badge
-                color="blue"
-                variant="light"
-              >
-                Salary
-              </Badge>
-            )}
+          {counts.salary > 0 && (
+            <Badge
+              color="blue"
+              variant="light"
+            >
+              Salary ×
+              {" "}
+              {counts.salary}
+            </Badge>
+          )}
 
-          {types.has(
-            "FD"
-          ) && (
-              <Badge
-                color="cyan"
-                variant="light"
-              >
-                FD
-              </Badge>
-            )}
+          {counts.fd > 0 && (
+            <Badge
+              color="cyan"
+              variant="light"
+            >
+              FD × {counts.fd}
+            </Badge>
+          )}
 
-          {types.has(
-            "RD"
-          ) && (
-              <Badge
-                color="grape"
-                variant="light"
-              >
-                RD
-              </Badge>
-            )}
+          {counts.rd > 0 && (
+            <Badge
+              color="grape"
+              variant="light"
+            >
+              RD × {counts.rd}
+            </Badge>
+          )}
         </Group>
       </Group>
     </Paper>
