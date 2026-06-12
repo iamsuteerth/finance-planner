@@ -29,20 +29,9 @@ export default function DashboardTabs() {
       withBorder
       p="lg"
     >
-      <Tabs
-        defaultValue="forecast"
-      >
+      <Tabs defaultValue="forecast">
         <Tabs.List
           className={classes.tabsList}
-          style={{
-            flexWrap: "nowrap",
-            overflowY: "hidden",
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
-          }}
         >
           <Tabs.Tab
             value="forecast"
@@ -116,6 +105,6 @@ export default function DashboardTabs() {
           <EventTimeline />
         </Tabs.Panel>
       </Tabs>
-    </Card >
+    </Card>
   );
 }
